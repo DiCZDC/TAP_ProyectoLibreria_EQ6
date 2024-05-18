@@ -342,7 +342,6 @@ public class RegEditorial extends javax.swing.JDialog {
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         try {
-                int id = Integer.parseInt(JTEditorial.getValueAt(fila, 0).toString());
 
                 PreparedStatement ps = cn.prepareStatement("INSERT INTO editorial (nombre,telefono,url,email,direccion) VALUES (?,?,?,?,?)");
 

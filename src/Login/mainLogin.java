@@ -4,17 +4,18 @@
  */
 package Login;
 
-//import Conector.Conexion;
+import Conector.Conexion;
 import Ventanas.*;
 import java.sql.*;
+import javax.swing.JOptionPane;
 /**
  *
  * @author Zaidc
  */
 public class mainLogin extends javax.swing.JFrame {
 
-    //Conexion con = new Conexion();
-    //Connection cn = con.conectar();
+    Conexion con = new Conexion();
+    Connection cn = con.conectar();
     int xMouse,yMouse;
     public mainLogin() {
         this.setLocation(200, 200);
@@ -272,18 +273,33 @@ public class mainLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_txtUserMouseClicked
 
     private void btnSiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSiguienteActionPerformed
-        
-        
+        String password = "";
+        int tipo = 3;
+        try {
+            PreparedStatement ps = cn.prepareStatement("SELECT * FROM empleado WHERE usuario =?");
+                ps.setString(1, txtUser.getText());
+                ResultSet rs = ps.executeQuery();
+                
+                if(rs.next()) 
+                    password = rs.getString(11);
+                tipo = Integer.parseInt(rs.getString(12));
+        } catch (SQLException e) {
+            System.out.println("Error al mostrar los datos de la BD"+e);
+        }
+        if(password.equals(txtPassword.getText()))
+            windowSelector(tipo);
+        else
+            JOptionPane.showMessageDialog(null, "Contraseña erronea");
     }//GEN-LAST:event_btnSiguienteActionPerformed
     private void windowSelector(int i){
         if(i == 0)
-            System.out.println("gerente");
-        if(i == 1)
+            new VentanaGerente(this, rootPaneCheckingEnabled).setVisible(true);
+        else if(i == 1)
             new VentanaCajero(this, rootPaneCheckingEnabled).setVisible(true);
-        if (i == 2)
+        else if (i == 2)
             new VentanaBodega(this, rootPaneCheckingEnabled).setVisible(true);
-        //ventana.setVisible(true);
-        System.exit(0);
+        else
+            JOptionPane.showMessageDialog(null, "El usuario no existe o no tiene algun permiso valido");
     }
     /**
      * @param args the command line arguments

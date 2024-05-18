@@ -21,7 +21,6 @@ public class RegLibro extends javax.swing.JDialog {
 
     Conexion con = new Conexion();
     Connection cn = con.conectar();
-    private int fila = 0;
     
     public RegLibro(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -200,6 +199,7 @@ public class RegLibro extends javax.swing.JDialog {
         });
 
         panelBarcodeImg.setBorder(javax.swing.BorderFactory.createTitledBorder("Código de barras"));
+        panelBarcodeImg.setOpaque(false);
 
         lblbarcode.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
@@ -349,7 +349,33 @@ public class RegLibro extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+    private void saveData(int idAutor,int idEditorial){
+        try {
+                
 
+                PreparedStatement ps = cn.prepareStatement("INSERT INTO libro (codigoBarras,existencia en tienda,ISBN,titulo,precio,existencia total, idEditorial) VALUES (?,?,?,?,?,?,?)");
+
+                ps.setInt(1, Integer.parseInt(txtBarcode.getText()));
+                ps.setInt(2, 0);
+                ps.setString(3, txtISBN.getText());
+                ps.setString(4, txtTitulo.getText());
+                ps.setInt(5, Integer.parseInt(txtPrecio.getText()));
+                ps.setInt(6,0);
+                ps.setInt(7, idEditorial);
+                ps.executeUpdate();
+                
+                PreparedStatement ps2 = cn.prepareStatement("INSERT INTO escribir (codigoBarras,idAutor) VALUES(?,?)");
+                ps2.setInt(1, Integer.parseInt(txtBarcode.getText()));
+                ps2.setInt(2, idAutor);
+                ps2.executeUpdate();
+                
+                JOptionPane.showMessageDialog(null, "Datos guardados correctamente.");
+                
+                limpiarCampos();
+            } catch (SQLException e) {
+                System.out.println("Error al guardar los productos en la BD "+e);
+            }
+    }
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         int idAu,idEd;
         idAu = 0;
@@ -383,10 +409,7 @@ public class RegLibro extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(null, "Por favor seleccione casillas validas");
         
         
-        System.out.println(idAu+ "  "+idEd);
-        
-        //System.out.println(cboAutor.getSelectedItem().toString());
-        limpiarCampos();
+        saveData(idAu,idEd);
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     private void CancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelarActionPerformed
