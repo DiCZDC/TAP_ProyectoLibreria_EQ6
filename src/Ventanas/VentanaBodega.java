@@ -4,6 +4,9 @@
  */
 package Ventanas;
 
+import Conector.Conexion;
+import java.sql.*;
+
 /**
  *
  * @author Zaidc
@@ -13,11 +16,29 @@ public class VentanaBodega extends javax.swing.JDialog {
     /**
      * Creates new form VentanaBodega
      */
+    Conexion con = new Conexion();
+    Connection cn = con.conectar();
     public VentanaBodega(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        inicbo();
     }
-
+    public void inicbo(){
+        try {
+            String consulta = "SELECT * FROM libro";
+            ResultSet rs = cn.createStatement().executeQuery(consulta);
+            while (rs.next()) 
+                cboBarcode.addItem(rs.getString(1));
+            
+            consulta = "SELECT * FROM almacen";
+            rs = cn.createStatement().executeQuery(consulta);
+            while (rs.next()) 
+                cboAlmacen.addItem(rs.getString(2));
+            
+        } catch (SQLException e) {
+            System.out.println("Error al mostrar los datos de la BD"+e);
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -27,83 +48,116 @@ public class VentanaBodega extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        bgPanel = new javax.swing.JPanel();
-        panelTabla = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        JTProductos = new javax.swing.JTable();
-        panelInput = new javax.swing.JPanel();
+        panelDatos = new javax.swing.JPanel();
+        cboBarcode = new javax.swing.JComboBox<>();
+        jLabel1 = new javax.swing.JLabel();
+        cboAlmacen = new javax.swing.JComboBox<>();
+        jLabel2 = new javax.swing.JLabel();
+        jsCantidad = new javax.swing.JSpinner();
+        jLabel3 = new javax.swing.JLabel();
+        btnAceptar = new javax.swing.JButton();
+        btnSalida = new javax.swing.JButton();
+        panelInfo = new Ventanas.panelInfoLibro();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(new java.awt.Color(180, 211, 178));
         setName("JFProductos"); // NOI18N
 
-        bgPanel.setBackground(new java.awt.Color(180, 211, 178));
-        bgPanel.setLayout(new java.awt.GridLayout(1, 0));
-
-        panelTabla.setBorder(javax.swing.BorderFactory.createTitledBorder("Lista de productos"));
-        panelTabla.setOpaque(false);
-
-        JTProductos.setBackground(new java.awt.Color(241, 240, 226));
-        JTProductos.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+        cboBarcode.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " " }));
+        cboBarcode.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cboBarcodeActionPerformed(evt);
             }
-        ));
-        JTProductos.setOpaque(false);
-        jScrollPane1.setViewportView(JTProductos);
+        });
 
-        javax.swing.GroupLayout panelTablaLayout = new javax.swing.GroupLayout(panelTabla);
-        panelTabla.setLayout(panelTablaLayout);
-        panelTablaLayout.setHorizontalGroup(
-            panelTablaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 365, Short.MAX_VALUE)
-            .addGroup(panelTablaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 365, Short.MAX_VALUE))
+        jLabel1.setText("Codigo de barras:");
+
+        cboAlmacen.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " " }));
+
+        jLabel2.setText("Dirección del almacen:");
+
+        jLabel3.setText("Cantidad");
+
+        btnAceptar.setText("Aceptar");
+        btnAceptar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAceptarActionPerformed(evt);
+            }
+        });
+
+        btnSalida.setText("Salida");
+
+        javax.swing.GroupLayout panelDatosLayout = new javax.swing.GroupLayout(panelDatos);
+        panelDatos.setLayout(panelDatosLayout);
+        panelDatosLayout.setHorizontalGroup(
+            panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelDatosLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 129, Short.MAX_VALUE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnAceptar, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addGap(18, 18, 18)
+                .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelDatosLayout.createSequentialGroup()
+                        .addComponent(btnSalida)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(cboAlmacen, 0, 132, Short.MAX_VALUE)
+                    .addComponent(cboBarcode, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jsCantidad))
+                .addContainerGap())
         );
-        panelTablaLayout.setVerticalGroup(
-            panelTablaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 272, Short.MAX_VALUE)
-            .addGroup(panelTablaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 272, Short.MAX_VALUE))
+        panelDatosLayout.setVerticalGroup(
+            panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelDatosLayout.createSequentialGroup()
+                .addGap(47, 47, 47)
+                .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cboBarcode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(cboAlmacen)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(52, 52, 52)
+                .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jsCantidad)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(40, 40, 40)
+                .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAceptar)
+                    .addComponent(btnSalida))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-
-        bgPanel.add(panelTabla);
-
-        panelInput.setBorder(javax.swing.BorderFactory.createTitledBorder("Ingresa los datos necesarios"));
-        panelInput.setOpaque(false);
-
-        javax.swing.GroupLayout panelInputLayout = new javax.swing.GroupLayout(panelInput);
-        panelInput.setLayout(panelInputLayout);
-        panelInputLayout.setHorizontalGroup(
-            panelInputLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 365, Short.MAX_VALUE)
-        );
-        panelInputLayout.setVerticalGroup(
-            panelInputLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 272, Short.MAX_VALUE)
-        );
-
-        bgPanel.add(panelInput);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(bgPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(panelDatos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
+                .addComponent(panelInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 390, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(bgPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(panelDatos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(panelInfo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void cboBarcodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboBarcodeActionPerformed
+        panelInfo.setCodigoBarras(cboBarcode.getSelectedItem().toString());
+        panelInfo.actualizaDatos();
+    }//GEN-LAST:event_cboBarcodeActionPerformed
+
+    private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAceptarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -149,10 +203,15 @@ public class VentanaBodega extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTable JTProductos;
-    private javax.swing.JPanel bgPanel;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JPanel panelInput;
-    private javax.swing.JPanel panelTabla;
+    private javax.swing.JButton btnAceptar;
+    private javax.swing.JButton btnSalida;
+    private javax.swing.JComboBox<String> cboAlmacen;
+    private javax.swing.JComboBox<String> cboBarcode;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JSpinner jsCantidad;
+    private javax.swing.JPanel panelDatos;
+    private Ventanas.panelInfoLibro panelInfo;
     // End of variables declaration//GEN-END:variables
 }

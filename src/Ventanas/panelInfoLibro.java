@@ -52,23 +52,24 @@ public class panelInfoLibro extends javax.swing.JPanel {
         lblExistencia = new javax.swing.JLabel();
         lblPrecio = new javax.swing.JLabel();
 
+        setBorder(javax.swing.BorderFactory.createTitledBorder("Información del libro"));
         addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 formMouseClicked(evt);
             }
         });
 
-        lblTitulo.setText("titulo: ");
+        lblTitulo.setText("Titulo: ");
 
-        lblAutor.setText("autor: ");
+        lblAutor.setText("Autor: ");
 
-        lblEditorial.setText("editorial:");
+        lblEditorial.setText("Editorial:");
 
-        lblIsbn.setText("isbn: ");
+        lblIsbn.setText("ISBN:");
 
-        lblExistencia.setText("existencia: ");
+        lblExistencia.setText("Existencia:");
 
-        lblPrecio.setText("precio: ");
+        lblPrecio.setText("Precio:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -83,7 +84,7 @@ public class panelInfoLibro extends javax.swing.JPanel {
                     .addComponent(lblIsbn)
                     .addComponent(lblExistencia)
                     .addComponent(lblPrecio))
-                .addContainerGap(220, Short.MAX_VALUE))
+                .addContainerGap(214, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -100,7 +101,7 @@ public class panelInfoLibro extends javax.swing.JPanel {
                 .addComponent(lblExistencia)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblPrecio)
-                .addContainerGap(74, Short.MAX_VALUE))
+                .addContainerGap(51, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -112,7 +113,7 @@ public class panelInfoLibro extends javax.swing.JPanel {
         codigo_barras = cb;
     }
     
-    private void actualizaDatos(){
+    public void actualizaDatos(){
         String consulta = "SELECT * FROM libro WHERE codigoBarras=?";
         String idEditorial;
         String idAutor;
@@ -149,12 +150,12 @@ public class panelInfoLibro extends javax.swing.JPanel {
                 nombre_autor = rs.getString(2);
                 
                 
-                lblTitulo.setText("titulo: "+titulo_libro);
-                lblAutor.setText("autor: "+nombre_autor);
-                lblEditorial.setText("editorial: "+editorial);
-                lblIsbn.setText("isbn: "+isbn);
-                lblExistencia.setText("existencia: "+existencia);
-                lblPrecio.setText("precio: "+precio);
+                lblTitulo.setText("Titulo: "+titulo_libro);
+                lblAutor.setText("Autor: "+nombre_autor);
+                lblEditorial.setText("Editorial: "+editorial);
+                lblIsbn.setText("ISBN: "+isbn);
+                lblExistencia.setText("Existencia: "+existencia);
+                lblPrecio.setText("Precio: "+precio);
                 
                 
             }
