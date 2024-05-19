@@ -24,11 +24,11 @@ DROP TABLE IF EXISTS `libro`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `libro` (
   `codigoBarras` bigint(13) unsigned zerofill NOT NULL,
-  `existencia en tienda` int(4) unsigned zerofill NOT NULL DEFAULT '0000',
+  `existencia_tienda` int(4) unsigned zerofill NOT NULL DEFAULT '0000',
   `ISBN` varchar(17) NOT NULL,
   `titulo` varchar(50) NOT NULL,
   `precio` double unsigned NOT NULL,
-  `existencia total` int(5) unsigned zerofill NOT NULL DEFAULT '00000',
+  `existencia_total` int(5) unsigned zerofill NOT NULL DEFAULT '00000',
   `idEditorial` int unsigned NOT NULL,
   PRIMARY KEY (`codigoBarras`),
   UNIQUE KEY `ISBN_UNIQUE` (`ISBN`),
@@ -56,4 +56,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-05-17 19:30:15
+-- Dump completed on 2024-05-19 13:26:04
