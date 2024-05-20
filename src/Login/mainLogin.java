@@ -51,7 +51,7 @@ public class mainLogin extends javax.swing.JFrame {
         setUndecorated(true);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        booksImg.setIcon(new javax.swing.ImageIcon("C:\\Users\\Zaidc\\Desktop\\ITO\\Semestre 4\\topicos PROGRAMACIÓN\\ProyectoFinalLibreria\\imgRes\\bgBooks (Custom).png")); // NOI18N
+        booksImg.setIcon(new javax.swing.ImageIcon("C:\\Users\\Zaidc\\Desktop\\ITO\\Semestre 4\\topicos PROGRAMACIÓN\\TAP_ProyectoLibreria_EQ6\\imgRes\\bgBooks (Custom).png")); // NOI18N
         getContentPane().add(booksImg, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 270, 490, 160));
 
         panelLogin.setBackground(new java.awt.Color(255, 255, 255));

@@ -29,7 +29,7 @@
     <Component class="javax.swing.JLabel" name="booksImg">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="2" name="C:\Users\Zaidc\Desktop\ITO\Semestre 4\topicos PROGRAMACI&#xd3;N\ProyectoFinalLibreria\imgRes\bgBooks (Custom).png"/>
+          <Image iconType="2" name="C:\Users\Zaidc\Desktop\ITO\Semestre 4\topicos PROGRAMACI&#xd3;N\TAP_ProyectoLibreria_EQ6\imgRes\bgBooks (Custom).png"/>
         </Property>
       </Properties>
       <Constraints>
