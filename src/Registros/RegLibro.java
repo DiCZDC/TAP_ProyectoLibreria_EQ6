@@ -365,7 +365,7 @@ public class RegLibro extends javax.swing.JDialog {
                 ps.executeUpdate();
                 
                 PreparedStatement ps2 = cn.prepareStatement("INSERT INTO escribir (codigoBarras,idAutor) VALUES(?,?)");
-                ps2.setInt(1, Integer.parseInt(txtBarcode.getText()));
+                ps2.setLong(1, Long.parseLong(txtBarcode.getText()));
                 ps2.setInt(2, idAutor);
                 ps2.executeUpdate();
                 
