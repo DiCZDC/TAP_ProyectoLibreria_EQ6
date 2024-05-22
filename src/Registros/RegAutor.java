@@ -99,6 +99,7 @@ public class RegAutor extends javax.swing.JDialog {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        JTAutores.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
         JTAutores.setOpaque(false);
         JTAutores.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {

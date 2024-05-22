@@ -5,6 +5,9 @@
 package Ventanas;
 
 import Conector.Conexion;
+import emailClases.pdfGenerator;
+import java.io.File;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -68,6 +71,7 @@ public class VentanaCajero extends javax.swing.JDialog {
         txtEmail = new javax.swing.JTextField();
         txtPago = new javax.swing.JTextField();
         txtBarcode = new javax.swing.JTextField();
+        btnAceptar = new emailClases.EmailButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -201,6 +205,13 @@ public class VentanaCajero extends javax.swing.JDialog {
             }
         });
 
+        btnAceptar.setText("Ejecutar pago");
+        btnAceptar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAceptarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -225,6 +236,7 @@ public class VentanaCajero extends javax.swing.JDialog {
                             .addComponent(txtPago)))
                     .addComponent(txtBarcode))
                 .addContainerGap())
+            .addComponent(btnAceptar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -249,7 +261,9 @@ public class VentanaCajero extends javax.swing.JDialog {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(txtPago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(114, Short.MAX_VALUE))
+                .addGap(26, 26, 26)
+                .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(65, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout bgPanelLayout = new javax.swing.GroupLayout(bgPanel);
@@ -408,6 +422,43 @@ public class VentanaCajero extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(null, "Seleccione un registro.");
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
+    private File pdfGen() throws IOException{
+        pdfGenerator pdfSalida = new pdfGenerator();
+        pdfSalida.addText("BARCODE                 TITULO                       CANTIDAD   SUBTOTAL");
+        pdfSalida.addText("-----------------------------------------------------------------------");
+                
+        String aux;
+        
+        for(int i = 0; i < jTicket.getRowCount(); i++){
+            String titulo = jTicket.getValueAt(i, 1).toString();
+            if(titulo.length() > 30)
+                titulo = titulo.substring(0,30);
+                Long tempBC = Long.parseLong(jTicket.getValueAt(i, 0).toString());
+            aux = String.format("%013d    %-30s %10s %10s",tempBC, titulo,jTicket.getValueAt(i, 3),jTicket.getValueAt(i, 5));
+            pdfSalida.addText(aux);
+        }
+        pdfSalida.addText("-----------------------------------------------------------------------"+"\n\n\n");
+        aux = String.format(" SUBTOTAL: $ %-15.2f\n IVA: $ %-15.2f\n TOTAL: $ %-15.2f", Double.parseDouble(lblSubtot.getText()),Double.parseDouble(lblIVA.getText()),Double.parseDouble(lblTotal.getText()));
+        pdfSalida.addText(aux);
+        return  pdfSalida.getTicket();
+    }
+    
+    private void envioCorreo(){
+        btnAceptar.setEmail(txtEmail.getText());
+        //btnAceptar.setEmail("ultravioletgoon@gmail.com");
+        btnAceptar.setSubject("Ticket de compra");
+        btnAceptar.setMessage("");
+        try {
+            btnAceptar.setAttachedFile(pdfGen());
+            btnAceptar.sendEmail();
+        } catch (IOException ex) {
+            Logger.getLogger(VentanaCajero.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
+        envioCorreo();
+        
+    }//GEN-LAST:event_btnAceptarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -455,6 +506,7 @@ public class VentanaCajero extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JSpinner JsCantidad;
     private javax.swing.JPanel bgPanel;
+    private emailClases.EmailButton btnAceptar;
     private javax.swing.JButton btnAgregar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JLabel jLabel1;
