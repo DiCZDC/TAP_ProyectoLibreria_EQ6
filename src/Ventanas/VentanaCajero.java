@@ -336,6 +336,28 @@ public class VentanaCajero extends javax.swing.JDialog {
         }
         updateLbl();
     }
+    
+    private boolean copiasMinimas(){
+        int cantMax = 0;
+        try {
+            PreparedStatement ps = cn.prepareStatement("SELECT * FROM libro WHERE codigoBarras=?");
+            ps.setLong(1, Long.parseLong(txtBarcode.getText()));
+            ResultSet rs = ps.executeQuery();
+            if(rs.next())
+                cantMax = rs.getInt(2);
+        } catch (SQLException ex) {
+            Logger.getLogger(VentanaCajero.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        int solicitados = Integer.parseInt(JsCantidad.getValue().toString());
+        for(int i = 0; i < jTicket.getRowCount(); i++){
+            Long dif = Long.parseLong(jTicket.getValueAt(i, 0).toString())-Long.parseLong(txtBarcode.getText());
+            if(dif == 0){
+                solicitados+= Integer.parseInt(jTicket.getValueAt(i, 3).toString());
+                break;
+            }
+        }
+        return cantMax >= solicitados;
+    }
     private void updateLbl(){
         Double total = 0.0;
         for(int i = 0; i < jTicket.getRowCount(); i++)
@@ -346,13 +368,19 @@ public class VentanaCajero extends javax.swing.JDialog {
         lblTotal.setText(total+"");
         
     }
+    
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         if(Integer.parseInt(JsCantidad.getValue().toString()) <= 0){
             JOptionPane.showMessageDialog(null, "Ingrese una cantidad valida");
             return;
         }
-            
-        updateTabla();
+        if(!copiasMinimas()){
+            JOptionPane.showMessageDialog(null, "No hay suficientes copias disponibles en tienda");
+        return;
+        }
+            copiasMinimas();
+            updateTabla();
+        
         txtBarcode.setText("");
         JsCantidad.setValue(0);   
     }//GEN-LAST:event_btnAgregarActionPerformed
