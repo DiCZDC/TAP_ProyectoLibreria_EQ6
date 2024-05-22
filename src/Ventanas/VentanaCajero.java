@@ -172,6 +172,11 @@ public class VentanaCajero extends javax.swing.JDialog {
         });
 
         btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
 
         jLabel2.setText("Nombre");
 
@@ -360,6 +365,21 @@ public class VentanaCajero extends javax.swing.JDialog {
         panelInfo.setCodigoBarras(txtBarcode.getText());
         panelInfo.actualizaDatos();
     }//GEN-LAST:event_txtBarcodeActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        if (jTicket.getSelectedRow() >= 0) {
+            if (JOptionPane.showConfirmDialog(null, "Está seguro de eliminar el registro?",
+                    "Eliminar Producto", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+                DefaultTableModel dft = (DefaultTableModel) jTicket.getModel();
+                dft.removeRow(jTicket.getSelectedRow());
+                updateLbl();
+            } else {
+                JOptionPane.showMessageDialog(null, "Registro No Eliminado.");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Seleccione un registro.");
+        }
+    }//GEN-LAST:event_btnEliminarActionPerformed
 
     /**
      * @param args the command line arguments
