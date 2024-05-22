@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -25,28 +26,14 @@ public class VentanaCajero extends javax.swing.JDialog {
     public VentanaCajero(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        inicbo();
         iniTab();
     }
 
-    public void inicbo(){
-        try {
-            String consulta = "SELECT * FROM libro";
-            ResultSet rs = cn.createStatement().executeQuery(consulta);
-            while (rs.next()) 
-                cboBarcode.addItem(rs.getString(1));
-            
-        } catch (SQLException e) {
-            System.out.println("Error al mostrar los datos de la BD"+e);
-        }
-    }
     public void iniTab(){
-        
-        String [] cabeceras = {"Codigo de barras","Nombre","ISBN","Cantidad","Precio",};
+        String [] cabeceras = {"Codigo de barras","Nombre","ISBN","Cantidad","Precio","Subtotal"};
         
         for(int i = 0; i < cabeceras.length; i++)
             modelo.addColumn(cabeceras[i]);
-        
         jTicket.setModel(modelo);
     }
     /**
@@ -71,7 +58,6 @@ public class VentanaCajero extends javax.swing.JDialog {
         lblTotal = new javax.swing.JLabel();
         panelInfo = new Ventanas.panelInfoLibro();
         jPanel2 = new javax.swing.JPanel();
-        cboBarcode = new javax.swing.JComboBox<>();
         JsCantidad = new javax.swing.JSpinner();
         btnAgregar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
@@ -81,6 +67,7 @@ public class VentanaCajero extends javax.swing.JDialog {
         txtNombreCli = new javax.swing.JTextField();
         txtEmail = new javax.swing.JTextField();
         txtPago = new javax.swing.JTextField();
+        txtBarcode = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -109,10 +96,13 @@ public class VentanaCajero extends javax.swing.JDialog {
         jLabel5.setText("Total");
         jLabel5.setToolTipText("");
 
+        lblSubtot.setText("0");
         lblSubtot.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
+        lblIVA.setText("0");
         lblIVA.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
+        lblTotal.setText("0");
         lblTotal.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -127,9 +117,9 @@ public class VentanaCajero extends javax.swing.JDialog {
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(36, 36, 36)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(lblSubtot, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblSubtot, javax.swing.GroupLayout.DEFAULT_SIZE, 207, Short.MAX_VALUE)
                     .addComponent(lblIVA, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblTotal, javax.swing.GroupLayout.DEFAULT_SIZE, 207, Short.MAX_VALUE))
+                    .addComponent(lblTotal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -147,7 +137,7 @@ public class VentanaCajero extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(lblTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(12, Short.MAX_VALUE))
+                .addContainerGap(8, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout panelProductosLayout = new javax.swing.GroupLayout(panelProductos);
@@ -174,13 +164,6 @@ public class VentanaCajero extends javax.swing.JDialog {
 
         jPanel2.setOpaque(false);
 
-        cboBarcode.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " " }));
-        cboBarcode.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cboBarcodeActionPerformed(evt);
-            }
-        });
-
         btnAgregar.setText("Agregar");
         btnAgregar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -202,6 +185,17 @@ public class VentanaCajero extends javax.swing.JDialog {
             }
         });
 
+        txtBarcode.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtBarcodeActionPerformed(evt);
+            }
+        });
+        txtBarcode.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtBarcodeKeyTyped(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -209,7 +203,6 @@ public class VentanaCajero extends javax.swing.JDialog {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(cboBarcode, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(JsCantidad)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -224,14 +217,15 @@ public class VentanaCajero extends javax.swing.JDialog {
                                 .addComponent(btnEliminar))
                             .addComponent(txtNombreCli)
                             .addComponent(txtEmail)
-                            .addComponent(txtPago))))
+                            .addComponent(txtPago)))
+                    .addComponent(txtBarcode))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(38, 38, 38)
-                .addComponent(cboBarcode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtBarcode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(JsCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -287,9 +281,7 @@ public class VentanaCajero extends javax.swing.JDialog {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(bgPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(bgPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -298,46 +290,76 @@ public class VentanaCajero extends javax.swing.JDialog {
     private void txtEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmailActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtEmailActionPerformed
-
-    private void cboBarcodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboBarcodeActionPerformed
-        panelInfo.setCodigoBarras(cboBarcode.getSelectedItem().toString());
-        panelInfo.actualizaDatos();
-    }//GEN-LAST:event_cboBarcodeActionPerformed
-    private int updateTabla(){
-        String []data = new String[5];
-        int devolver = 0;
-        try {
-            PreparedStatement ps = cn.prepareStatement("SELECT * FROM libro WHERE codigoBarras=?");
-                ps.setLong(1, Long.parseLong(cboBarcode.getSelectedItem().toString()));
-            ResultSet rs = ps.executeQuery();
-            
-            if(rs.next()){
-                data[0] = rs.getString(1);
-                data[1] = rs.getString(4);
-                data[2] = rs.getString(3);
-                data[3] = JsCantidad.getValue().toString();
-                data[4] = rs.getString(5);
-                devolver = Integer.parseInt(data[3]) *Integer.parseInt(data[4]);
+    private boolean dataExists(){
+        Long barcodelong = Long.parseLong(txtBarcode.getText());
+        for(int i = 0; i < jTicket.getRowCount(); i++){
+            Long dif = Long.parseLong(jTicket.getValueAt(i, 0).toString())-barcodelong;
+            if(dif == 0){
+                jTicket.setValueAt(Integer.parseInt(jTicket.getValueAt(i, 3).toString()) + Integer.parseInt(JsCantidad.getValue().toString()), i, 3);
+                jTicket.setValueAt(Double.parseDouble(jTicket.getValueAt(i, 4).toString()) * Integer.parseInt(jTicket.getValueAt(i, 3).toString()), i, 5);
+                
+                return true;
             }
-            
-            modelo.addRow(data);
-        } catch (SQLException ex) {
-            Logger.getLogger(VentanaCajero.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return devolver;
+        return false;
     }
-    private void updateLbl(int nuevo){
-        if(lblSubtot.getText().equals("")){
-            
+        
+    private void updateTabla(){
+        String []data = new String[6];
+        double devolver = 0;
+        if(!dataExists()){
+            try {
+                PreparedStatement ps = cn.prepareStatement("SELECT * FROM libro WHERE codigoBarras=?");
+                    ps.setLong(1, Long.parseLong(txtBarcode.getText()));
+                ResultSet rs = ps.executeQuery();
+
+                if(rs.next()){
+                    data[0] = rs.getString(1);
+                    data[1] = rs.getString(4);
+                    data[2] = rs.getString(3);
+                    data[3] = JsCantidad.getValue().toString();
+                    data[4] = rs.getString(5);
+                    data[5] = (Integer.parseInt(JsCantidad.getValue().toString())* Double.parseDouble(rs.getString(5)))+"";
+                    devolver = Double.parseDouble(data[3]) *Double.parseDouble(data[4]);
+                    modelo.addRow(data);
+                }else
+                    JOptionPane.showMessageDialog(null, "El producto no existe");
+
+            } catch (SQLException ex) {
+                Logger.getLogger(VentanaCajero.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
+        updateLbl();
+    }
+    private void updateLbl(){
+        Double total = 0.0;
+        for(int i = 0; i < jTicket.getRowCount(); i++)
+            total+=Double.parseDouble(jTicket.getValueAt(i, 5).toString());
+        Double iva = total*.16;
+        lblIVA.setText(iva+"");
+        lblSubtot.setText((total-iva)+"");
+        lblTotal.setText(total+"");
+        
     }
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-        
+        if(Integer.parseInt(JsCantidad.getValue().toString()) <= 0){
+            JOptionPane.showMessageDialog(null, "Ingrese una cantidad valida");
+            return;
+        }
+            
         updateTabla();
-        
-        cboBarcode.setSelectedIndex(0);
+        txtBarcode.setText("");
         JsCantidad.setValue(0);   
     }//GEN-LAST:event_btnAgregarActionPerformed
+
+    private void txtBarcodeKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBarcodeKeyTyped
+        
+    }//GEN-LAST:event_txtBarcodeKeyTyped
+
+    private void txtBarcodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBarcodeActionPerformed
+        panelInfo.setCodigoBarras(txtBarcode.getText());
+        panelInfo.actualizaDatos();
+    }//GEN-LAST:event_txtBarcodeActionPerformed
 
     /**
      * @param args the command line arguments
@@ -387,7 +409,6 @@ public class VentanaCajero extends javax.swing.JDialog {
     private javax.swing.JPanel bgPanel;
     private javax.swing.JButton btnAgregar;
     private javax.swing.JButton btnEliminar;
-    private javax.swing.JComboBox<String> cboBarcode;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -403,6 +424,7 @@ public class VentanaCajero extends javax.swing.JDialog {
     private javax.swing.JLabel lblTotal;
     private Ventanas.panelInfoLibro panelInfo;
     private javax.swing.JPanel panelProductos;
+    private javax.swing.JTextField txtBarcode;
     private javax.swing.JTextField txtEmail;
     private javax.swing.JTextField txtNombreCli;
     private javax.swing.JTextField txtPago;

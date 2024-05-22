@@ -112,6 +112,7 @@ public class mainLogin extends javax.swing.JFrame {
         userLbl1.setText("Contraseña:");
 
         txtPassword.setForeground(new java.awt.Color(102, 102, 102));
+        txtPassword.setBorder(null);
         txtPassword.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 txtPasswordMouseClicked(evt);
