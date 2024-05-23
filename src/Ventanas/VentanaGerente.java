@@ -8,6 +8,8 @@ package Ventanas;
  *
  * @author Zaidc
  */
+import Registros.*;
+
 public class VentanaGerente extends javax.swing.JDialog {
 
     /**
@@ -27,21 +29,91 @@ public class VentanaGerente extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        btnRegLibro = new javax.swing.JButton();
+        btnRegEditorial = new javax.swing.JButton();
+        btnRegAutor = new javax.swing.JButton();
+        btnVentanaVentas = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
+        btnRegLibro.setText("registrar libro");
+        btnRegLibro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegLibroActionPerformed(evt);
+            }
+        });
+
+        btnRegEditorial.setText("editar tabla editorial");
+        btnRegEditorial.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegEditorialActionPerformed(evt);
+            }
+        });
+
+        btnRegAutor.setText("editar tabla autor");
+        btnRegAutor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegAutorActionPerformed(evt);
+            }
+        });
+
+        btnVentanaVentas.setText("vizualizar ventas");
+        btnVentanaVentas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVentanaVentasActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(33, 33, 33)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnVentanaVentas, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnRegAutor, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnRegEditorial, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnRegLibro, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(37, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(47, 47, 47)
+                .addComponent(btnRegLibro, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnRegEditorial, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnRegAutor, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnVentanaVentas, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(114, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnRegLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegLibroActionPerformed
+        // TODO add your handling code here:
+        new RegLibro(null, rootPaneCheckingEnabled).setVisible(true);
+    }//GEN-LAST:event_btnRegLibroActionPerformed
+
+    private void btnRegEditorialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegEditorialActionPerformed
+        // TODO add your handling code here:
+        new RegEditorial(null, rootPaneCheckingEnabled).setVisible(true);
+    }//GEN-LAST:event_btnRegEditorialActionPerformed
+
+    private void btnRegAutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegAutorActionPerformed
+        // TODO add your handling code here:
+        new RegAutor(null, rootPaneCheckingEnabled).setVisible(true);
+    }//GEN-LAST:event_btnRegAutorActionPerformed
+
+    private void btnVentanaVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVentanaVentasActionPerformed
+        // TODO add your handling code here:
+        new VentanaVentas(null, rootPaneCheckingEnabled);      
+        
+    }//GEN-LAST:event_btnVentanaVentasActionPerformed
 
     /**
      * @param args the command line arguments
@@ -86,5 +158,9 @@ public class VentanaGerente extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnRegAutor;
+    private javax.swing.JButton btnRegEditorial;
+    private javax.swing.JButton btnRegLibro;
+    private javax.swing.JButton btnVentanaVentas;
     // End of variables declaration//GEN-END:variables
 }

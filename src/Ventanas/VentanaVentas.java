@@ -7,15 +7,20 @@ package Ventanas;
 import java.sql.*;
 import javax.swing.table.DefaultTableModel;
 import Conector.Conexion;
+import java.awt.Color;
+import javax.swing.JOptionPane;
 
-public class VentanaVentas extends javax.swing.JFrame {
+public class VentanaVentas extends javax.swing.JDialog {
 
     Conexion con = new Conexion();
     Connection cn = con.conectar();
+    boolean seleccionado = false;
     
-    public VentanaVentas() {
+    public VentanaVentas(java.awt.Frame parent, boolean modal) {
+        super(parent, modal);
         initComponents();
         mostrarVentas();
+        setVisible(true);
     }
 
     /**
@@ -33,8 +38,9 @@ public class VentanaVentas extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tablaProductos = new javax.swing.JTable();
+        txtIDventa = new javax.swing.JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
@@ -74,7 +80,7 @@ public class VentanaVentas extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 595, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 587, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -104,28 +110,54 @@ public class VentanaVentas extends javax.swing.JFrame {
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane2)
                 .addContainerGap())
         );
 
+        txtIDventa.setForeground(new java.awt.Color(153, 153, 153));
+        txtIDventa.setText("buscar un idVenta");
+        txtIDventa.setToolTipText("");
+        txtIDventa.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtIDventaMouseClicked(evt);
+            }
+        });
+        txtIDventa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtIDventaActionPerformed(evt);
+            }
+        });
+        txtIDventa.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtIDventaKeyPressed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(txtIDventa, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(txtIDventa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
@@ -136,13 +168,43 @@ public class VentanaVentas extends javax.swing.JFrame {
 
     private void tablaVentasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaVentasMouseClicked
         
-        mostrarProductos();
+        mostrarProductos(tablaVentas.getValueAt(tablaVentas.getSelectedRow(),0).toString());
     }//GEN-LAST:event_tablaVentasMouseClicked
 
     private void tablaVentasMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaVentasMouseExited
         // TODO add your handling code here:
         
     }//GEN-LAST:event_tablaVentasMouseExited
+
+    private void txtIDventaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtIDventaMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtIDventaMouseClicked
+
+    private void txtIDventaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIDventaKeyPressed
+        if(!seleccionado){
+            txtIDventa.setText("");
+            txtIDventa.setForeground(Color.black);
+            seleccionado = true;
+        }
+    }//GEN-LAST:event_txtIDventaKeyPressed
+
+    private void txtIDventaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIDventaActionPerformed
+        String consulta ="SELECT * FROM venta WHERE idVenta=?"; 
+        try {
+            PreparedStatement ps = cn.prepareStatement(consulta);
+            ps.setString(1,txtIDventa.getText());
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()){
+                mostrarProductos(txtIDventa.getText());
+            }else{
+                JOptionPane.showMessageDialog(null, "no existe ese idVenta");
+            }
+        } catch (SQLException e) {
+            System.out.println("error al conectar con la bd "+e);
+        }
+        
+        
+    }//GEN-LAST:event_txtIDventaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -174,7 +236,13 @@ public class VentanaVentas extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new VentanaVentas().setVisible(true);
+                VentanaVentas dialog = new VentanaVentas(new javax.swing.JFrame(), true);
+                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                    @Override
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        System.exit(0);
+                    }
+                });
             }
         });
     }
@@ -225,7 +293,7 @@ public class VentanaVentas extends javax.swing.JFrame {
         
     }
     
-    public void mostrarProductos(){
+    public void mostrarProductos(String idVenta){
         System.out.println("Ventanas.VentanaVentas.mostrarProductos()");
         DefaultTableModel modelo = new DefaultTableModel();
         modelo.addColumn("codigo de barras");
@@ -236,7 +304,6 @@ public class VentanaVentas extends javax.swing.JFrame {
         modelo.addColumn("subtotal");
         
         
-        String idVenta =tablaVentas.getValueAt(tablaVentas.getSelectedRow(),0).toString();
         String consulta = "SELECT * FROM libro JOIN incluir ON libro.codigoBarras = incluir.codigoBarras WHERE incluir.idVenta = ?";
         System.out.println(idVenta);
         tablaProductos.setModel(modelo);
@@ -286,5 +353,6 @@ public class VentanaVentas extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable tablaProductos;
     private javax.swing.JTable tablaVentas;
+    private javax.swing.JTextField txtIDventa;
     // End of variables declaration//GEN-END:variables
 }

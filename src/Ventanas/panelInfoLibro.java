@@ -117,7 +117,7 @@ public class panelInfoLibro extends javax.swing.JPanel {
         String idEditorial;
         String idAutor;
         
-        codigo_barras = titulo_libro = nombre_autor = editorial = isbn = existencia = precio = "";
+        titulo_libro = nombre_autor = editorial = isbn = existencia = precio = "";
         try {
             PreparedStatement ps = cn.prepareStatement(consulta);
             ps.setString(1, codigo_barras);
