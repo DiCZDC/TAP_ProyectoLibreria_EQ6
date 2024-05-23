@@ -6,14 +6,11 @@ package Ventanas;
 
 import Conector.Conexion;
 import emailClases.pdfGenerator;
-import java.io.File;
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.io.*;
+import java.sql.*;
+import java.time.LocalDate;
+import java.util.Calendar;
+import java.util.logging.*;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -26,9 +23,12 @@ public class VentanaCajero extends javax.swing.JDialog {
     Conexion con = new Conexion();
     Connection cn = con.conectar();
     DefaultTableModel modelo = new DefaultTableModel();
-    public VentanaCajero(java.awt.Frame parent, boolean modal) {
+    int idCaja = 0;
+    public VentanaCajero(java.awt.Frame parent, boolean modal,int idCajero) {
         super(parent, modal);
         initComponents();
+        lblCajero.setText("ID cajero: "+idCajero);
+        idCaja = idCajero;
         iniTab();
     }
 
@@ -72,6 +72,7 @@ public class VentanaCajero extends javax.swing.JDialog {
         txtPago = new javax.swing.JTextField();
         txtBarcode = new javax.swing.JTextField();
         btnAceptar = new emailClases.EmailButton();
+        lblCajero = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -266,6 +267,8 @@ public class VentanaCajero extends javax.swing.JDialog {
                 .addContainerGap(65, Short.MAX_VALUE))
         );
 
+        lblCajero.setText("ID cajero:");
+
         javax.swing.GroupLayout bgPanelLayout = new javax.swing.GroupLayout(bgPanel);
         bgPanel.setLayout(bgPanelLayout);
         bgPanelLayout.setHorizontalGroup(
@@ -276,20 +279,25 @@ public class VentanaCajero extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panelInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 341, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(bgPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblCajero, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(20, 20, 20))
         );
         bgPanelLayout.setVerticalGroup(
             bgPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(bgPanelLayout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(bgPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(bgPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(panelProductos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(panelInfo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, bgPanelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblCajero, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(38, 38, 38))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -455,9 +463,65 @@ public class VentanaCajero extends javax.swing.JDialog {
             Logger.getLogger(VentanaCajero.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    private void updateDatabase(){
+        String clienteNombre = txtNombreCli.getText();
+        java.sql.Date actDate = java.sql.Date.valueOf(LocalDate.now());
+        String ClienteEmail = txtEmail.getText();
+        int idVenta = 0;
+        
+        try {
+            PreparedStatement ps = cn.prepareStatement("INSERT INTO venta (nombre_cliente,fecha_venta,idCajero,correo_cliente) VALUES (?,?,?,?)");
+                ps.setString(1, clienteNombre);
+                ps.setDate(2,actDate );
+                ps.setInt(3, idCaja);
+                ps.setString(4, ClienteEmail);
+                ps.executeUpdate();
+            
+            ps = cn.prepareStatement("SELECT * FROM venta WHERE nombre_cliente=? AND fecha_venta=? AND idCajero=? AND correo_cliente=?");
+                ps.setString(1, clienteNombre);
+                ps.setDate(2,actDate );
+                ps.setInt(3, idCaja);
+                ps.setString(4, ClienteEmail);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next())
+                idVenta = rs.getInt(1);
+            
+            for(int i = 0; i < jTicket.getRowCount();i++){
+                ps = cn.prepareStatement("INSERT INTO incluir (idVenta,codigoBarras,cantidad,subtotal) VALUES (?,?,?,?)");
+                ps.setInt(1, idVenta);
+                ps.setLong(2, Long.parseLong(jTicket.getValueAt(i, 0).toString()));
+                ps.setInt(3, Integer.parseInt(jTicket.getValueAt(i, 3).toString()));
+                ps.setDouble(4, Double.parseDouble(jTicket.getValueAt(i, 5).toString()));
+                ps.executeUpdate();
+            }
+            
+            for(int i = 0; i < jTicket.getRowCount(); i++){
+                ps = cn.prepareStatement("SELECT * FROM libro WHERE codigoBarras=?");
+                ps.setLong(1, Long.parseLong(jTicket.getValueAt(i, 0).toString()));
+                rs = ps.executeQuery();
+                int cantAct = 0;
+                int exAct = 0;
+                    if(rs.next()){
+                        cantAct = rs.getInt(2)- Integer.parseInt(jTicket.getValueAt(i, 3).toString());
+                        exAct = rs.getInt(6)-Integer.parseInt(jTicket.getValueAt(i, 3).toString());
+                    }
+                    
+                ps= cn.prepareStatement("UPDATE libro SET existencia_tienda=?,existencia_total=? WHERE codigoBarras=?");
+                ps.setInt(1, cantAct);
+                ps.setInt(2, exAct);
+                ps.setLong(3, Long.parseLong(jTicket.getValueAt(i, 0).toString()));
+                ps.executeUpdate();
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(VentanaCajero.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         envioCorreo();
-        
+        updateDatabase();
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     /**
@@ -491,7 +555,7 @@ public class VentanaCajero extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                VentanaCajero dialog = new VentanaCajero(new javax.swing.JFrame(), true);
+                VentanaCajero dialog = new VentanaCajero(new javax.swing.JFrame(), true,0);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -519,6 +583,7 @@ public class VentanaCajero extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTicket;
+    private javax.swing.JLabel lblCajero;
     private javax.swing.JLabel lblIVA;
     private javax.swing.JLabel lblSubtot;
     private javax.swing.JLabel lblTotal;

@@ -6,6 +6,9 @@ package Ventanas;
 
 import Conector.Conexion;
 import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -55,7 +58,7 @@ public class VentanaBodega extends javax.swing.JDialog {
         jLabel2 = new javax.swing.JLabel();
         jsCantidad = new javax.swing.JSpinner();
         jLabel3 = new javax.swing.JLabel();
-        btnAceptar = new javax.swing.JButton();
+        btnEntrada = new javax.swing.JButton();
         btnSalida = new javax.swing.JButton();
         panelInfo = new Ventanas.panelInfoLibro();
 
@@ -78,14 +81,19 @@ public class VentanaBodega extends javax.swing.JDialog {
 
         jLabel3.setText("Cantidad");
 
-        btnAceptar.setText("Aceptar");
-        btnAceptar.addActionListener(new java.awt.event.ActionListener() {
+        btnEntrada.setText("Entrada");
+        btnEntrada.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAceptarActionPerformed(evt);
+                btnEntradaActionPerformed(evt);
             }
         });
 
         btnSalida.setText("Salida");
+        btnSalida.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalidaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelDatosLayout = new javax.swing.GroupLayout(panelDatos);
         panelDatos.setLayout(panelDatosLayout);
@@ -97,7 +105,7 @@ public class VentanaBodega extends javax.swing.JDialog {
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 129, Short.MAX_VALUE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnAceptar, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addComponent(btnEntrada, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addGap(18, 18, 18)
                 .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelDatosLayout.createSequentialGroup()
@@ -125,8 +133,8 @@ public class VentanaBodega extends javax.swing.JDialog {
                     .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(40, 40, 40)
                 .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnAceptar)
-                    .addComponent(btnSalida))
+                    .addComponent(btnSalida)
+                    .addComponent(btnEntrada))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -154,10 +162,35 @@ public class VentanaBodega extends javax.swing.JDialog {
         panelInfo.setCodigoBarras(cboBarcode.getSelectedItem().toString());
         panelInfo.actualizaDatos();
     }//GEN-LAST:event_cboBarcodeActionPerformed
-
-    private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
+    private boolean salidaValida(int sal){
+        int lim = 0;
+        try {
+            PreparedStatement ps = cn.prepareStatement("SELECT * FROM sistemalibreria.almacenar WHERE");
+            ResultSet rs= ps.executeQuery();
+            if(rs.next())
+                lim = Integer.parseInt(rs.getString(3));
+        } catch (SQLException ex) {
+            Logger.getLogger(VentanaBodega.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return lim>=sal && sal >0;
+    }
+    
+    private void salidaBodega(){
+        int salen = Integer.parseInt(jsCantidad.getValue().toString());
+        if(!salidaValida(salen)){
+            JOptionPane.showMessageDialog(null, "INGRESE UNA CANTIDAD VALIDA");
+            return;
+        }
+            
+        
+    }
+    private void btnEntradaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntradaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnAceptarActionPerformed
+    }//GEN-LAST:event_btnEntradaActionPerformed
+
+    private void btnSalidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalidaActionPerformed
+        salidaBodega();
+    }//GEN-LAST:event_btnSalidaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -203,7 +236,7 @@ public class VentanaBodega extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAceptar;
+    private javax.swing.JButton btnEntrada;
     private javax.swing.JButton btnSalida;
     private javax.swing.JComboBox<String> cboAlmacen;
     private javax.swing.JComboBox<String> cboBarcode;

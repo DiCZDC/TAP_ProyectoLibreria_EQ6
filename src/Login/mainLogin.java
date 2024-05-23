@@ -63,7 +63,7 @@ public class mainLogin extends javax.swing.JFrame {
         usrPanel.setOpaque(false);
 
         txtUser.setForeground(new java.awt.Color(102, 102, 102));
-        txtUser.setText("Ingrese su contraseña");
+        txtUser.setText("Ingrese su usuario");
         txtUser.setBorder(null);
         txtUser.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -276,27 +276,31 @@ public class mainLogin extends javax.swing.JFrame {
     private void btnSiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSiguienteActionPerformed
         String password = "";
         int tipo = 3;
+        int id = 0;
         try {
             PreparedStatement ps = cn.prepareStatement("SELECT * FROM empleado WHERE usuario =?");
                 ps.setString(1, txtUser.getText());
                 ResultSet rs = ps.executeQuery();
                 
-                if(rs.next()) 
+                if(rs.next()) {
                     password = rs.getString(11);
+                    id = Integer.parseInt(rs.getString(1));
+                }
                 tipo = Integer.parseInt(rs.getString(12));
         } catch (SQLException e) {
             System.out.println("Error al mostrar los datos de la BD"+e);
         }
         if(password.equals(txtPassword.getText()))
-            windowSelector(tipo);
+            windowSelector(tipo,id);
         else
             JOptionPane.showMessageDialog(null, "Contraseña erronea");
     }//GEN-LAST:event_btnSiguienteActionPerformed
-    private void windowSelector(int i){
+    private void windowSelector(int i,int id){
+        
         if(i == 0)
             new VentanaGerente(this, rootPaneCheckingEnabled).setVisible(true);
         else if(i == 1)
-            new VentanaCajero(this, rootPaneCheckingEnabled).setVisible(true);
+            new VentanaCajero(this, rootPaneCheckingEnabled,id).setVisible(true);
         else if (i == 2)
             new VentanaBodega(this, rootPaneCheckingEnabled).setVisible(true);
         else
