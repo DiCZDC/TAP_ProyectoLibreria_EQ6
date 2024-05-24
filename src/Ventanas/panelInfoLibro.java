@@ -58,17 +58,17 @@ public class panelInfoLibro extends javax.swing.JPanel {
             }
         });
 
-        lblTitulo.setText("titulo: ");
+        lblTitulo.setText("Titulo: ");
 
-        lblAutor.setText("autor: ");
+        lblAutor.setText("Autor: ");
 
-        lblEditorial.setText("editorial:");
+        lblEditorial.setText("Editorial:");
 
-        lblIsbn.setText("isbn: ");
+        lblIsbn.setText("ISBN: ");
 
-        lblExistencia.setText("existencia: ");
+        lblExistencia.setText("Existencia: ");
 
-        lblPrecio.setText("precio: ");
+        lblPrecio.setText("Precio: ");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -159,12 +159,12 @@ public class panelInfoLibro extends javax.swing.JPanel {
             System.out.println("error al conectar con la bd "+e );
         }
         
-        lblTitulo.setText("titulo: "+titulo_libro);
-        lblAutor.setText("autor: "+nombre_autor);
-        lblEditorial.setText("editorial: "+editorial);
-        lblIsbn.setText("isbn: "+isbn);
-        lblExistencia.setText("existencia: "+existencia);
-        lblPrecio.setText("precio: "+precio);
+        lblTitulo.setText("Titulo: "+titulo_libro);
+        lblAutor.setText("Autor: "+nombre_autor);
+        lblEditorial.setText("Editorial: "+editorial);
+        lblIsbn.setText("ISBN: "+isbn);
+        lblExistencia.setText("Existencia: "+existencia);
+        lblPrecio.setText("Precio: "+precio);
     }
     
     

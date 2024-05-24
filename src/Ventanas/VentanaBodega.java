@@ -6,6 +6,7 @@ package Ventanas;
 
 import Conector.Conexion;
 import java.sql.*;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -21,6 +22,7 @@ public class VentanaBodega extends javax.swing.JDialog {
      */
     Conexion con = new Conexion();
     Connection cn = con.conectar();
+    int idActAlm = 0;
     public VentanaBodega(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
@@ -164,11 +166,21 @@ public class VentanaBodega extends javax.swing.JDialog {
     }//GEN-LAST:event_cboBarcodeActionPerformed
     private boolean salidaValida(int sal){
         int lim = 0;
+        
         try {
-            PreparedStatement ps = cn.prepareStatement("SELECT * FROM sistemalibreria.almacenar WHERE");
-            ResultSet rs= ps.executeQuery();
+            PreparedStatement ps = cn.prepareStatement("SELECT * FROM almacen WHERE direccion=?");
+            ps.setString(1, cboAlmacen.getSelectedItem().toString());
+            ResultSet rs = ps.executeQuery();
+            if(rs.next())
+                idActAlm = rs.getInt(1);
+            
+            ps = cn.prepareStatement("SELECT * FROM sistemalibreria.almacenar WHERE codigoBarras=? AND idAlmacen=?");
+            ps.setLong(1, Long.parseLong(cboBarcode.getSelectedItem().toString()));
+            ps.setInt(2, idActAlm);
+            rs= ps.executeQuery();
             if(rs.next())
                 lim = Integer.parseInt(rs.getString(3));
+            
         } catch (SQLException ex) {
             Logger.getLogger(VentanaBodega.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -177,19 +189,65 @@ public class VentanaBodega extends javax.swing.JDialog {
     
     private void salidaBodega(){
         int salen = Integer.parseInt(jsCantidad.getValue().toString());
+        
         if(!salidaValida(salen)){
-            JOptionPane.showMessageDialog(null, "INGRESE UNA CANTIDAD VALIDA");
+            JOptionPane.showMessageDialog(null, "INGRESE DATOS VALIDOS");
             return;
         }
+        try {
+            //MODIFICAR EN ALMACEN
+            PreparedStatement ps = cn.prepareStatement("UPDATE almacenar SET existencia=existencia-? WHERE codigoBarras=? AND idalmacen=?");
+                ps.setInt(1, Integer.parseInt(jsCantidad.getValue().toString()));
+                ps.setLong(2, Long.parseLong(cboBarcode.getSelectedItem().toString()));
+                ps.setInt(3, idActAlm);
+            ps.executeUpdate();
             
+            //ACTUALIZAR DISPONIBILIDAD EN TIENDA
+            
+            ps = cn.prepareStatement("UPDATE libro SET existencia_tienda=existencia_tienda+? WHERE codigoBarras=?");
+                ps.setInt(1, Integer.parseInt(jsCantidad.getValue().toString()));
+                ps.setLong(2, Long.parseLong(cboBarcode.getSelectedItem().toString()));
+            ps.executeUpdate();
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(VentanaBodega.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    private void entradaBodega(){
         
+        try {
+            PreparedStatement ps = cn.prepareStatement("SELECT * FROM almacen WHERE direccion=?");
+            ps.setString(1, cboAlmacen.getSelectedItem().toString());
+            ResultSet rs = ps.executeQuery();
+            if(rs.next())
+                idActAlm = rs.getInt(1);
+            
+            ps = cn.prepareStatement("INSERT INTO almacenar (codigoBarras, idalmacen, existencia) VALUES(?,?,?) ON DUPLICATE KEY UPDATE existencia = existencia+?");
+            ps.setLong(1, Long.parseLong(cboBarcode.getSelectedItem().toString()));
+            ps.setInt(2, idActAlm);
+            ps.setInt(3, Integer.parseInt(jsCantidad.getValue().toString()));
+            ps.setInt(4, Integer.parseInt(jsCantidad.getValue().toString()));
+            ps.executeUpdate();
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(VentanaBodega.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    private void limpiarCampos(){
+        cboAlmacen.setSelectedIndex(0);
+        cboBarcode.setSelectedIndex(0);
+        jsCantidad.setValue(0);
     }
     private void btnEntradaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntradaActionPerformed
-        // TODO add your handling code here:
+        entradaBodega();
+        limpiarCampos();
     }//GEN-LAST:event_btnEntradaActionPerformed
 
     private void btnSalidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalidaActionPerformed
         salidaBodega();
+        limpiarCampos();
     }//GEN-LAST:event_btnSalidaActionPerformed
 
     /**

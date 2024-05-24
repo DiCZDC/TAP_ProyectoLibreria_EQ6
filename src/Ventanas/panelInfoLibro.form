@@ -56,32 +56,32 @@
   <SubComponents>
     <Component class="javax.swing.JLabel" name="lblTitulo">
       <Properties>
-        <Property name="text" type="java.lang.String" value="titulo: "/>
+        <Property name="text" type="java.lang.String" value="Titulo: "/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblAutor">
       <Properties>
-        <Property name="text" type="java.lang.String" value="autor: "/>
+        <Property name="text" type="java.lang.String" value="Autor: "/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblEditorial">
       <Properties>
-        <Property name="text" type="java.lang.String" value="editorial:"/>
+        <Property name="text" type="java.lang.String" value="Editorial:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblIsbn">
       <Properties>
-        <Property name="text" type="java.lang.String" value="isbn: "/>
+        <Property name="text" type="java.lang.String" value="ISBN: "/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblExistencia">
       <Properties>
-        <Property name="text" type="java.lang.String" value="existencia: "/>
+        <Property name="text" type="java.lang.String" value="Existencia: "/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblPrecio">
       <Properties>
-        <Property name="text" type="java.lang.String" value="precio: "/>
+        <Property name="text" type="java.lang.String" value="Precio: "/>
       </Properties>
     </Component>
   </SubComponents>
