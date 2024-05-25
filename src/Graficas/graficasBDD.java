@@ -69,7 +69,6 @@ public class graficasBDD extends javax.swing.JPanel {
     }
     
     private boolean panelEmpty(){
-        //System.out.println("EJECUTANDO");
         Component[] componentsPanel = panelGrafica.getComponents();
         return componentsPanel.length ==0;
     }
