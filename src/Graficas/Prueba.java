@@ -16,7 +16,7 @@ public class Prueba extends javax.swing.JFrame {
     public Prueba() {
         initComponents();
         
-        caso1();
+        //caso1();
         //caso2();
     }
     private void caso1(){

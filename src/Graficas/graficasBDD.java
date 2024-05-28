@@ -6,6 +6,7 @@ package Graficas;
 
 import Conector.Conexion;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.sql.*;
@@ -16,6 +17,9 @@ import org.jfree.chart.*;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.*;
+import org.jfree.data.xy.XYDataset;
+import org.jfree.data.xy.XYSeries;
+import org.jfree.data.xy.XYSeriesCollection;
 
 /**
  *
@@ -31,11 +35,13 @@ public class graficasBDD extends javax.swing.JPanel {
     HashMap<Long,Integer> hMapVal= new HashMap<Long,Integer>();
     HashMap<Long, String> hMapTit = new HashMap<Long,String>();
     
+            
     ChartPanel panel;
     
     
     public void fillData(String tabla,int keyPos){
         hMapVal.clear();
+        hMapTit.clear();
         try { 
             PreparedStatement ps = cn.prepareStatement("SELECT * FROM "+tabla);
             
@@ -48,6 +54,7 @@ public class graficasBDD extends javax.swing.JPanel {
                 else
                     hMapVal.put(keyAct, 1);
             }
+            
         } catch (SQLException ex) {
             Logger.getLogger(graficasBDD.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -69,18 +76,21 @@ public class graficasBDD extends javax.swing.JPanel {
     }
     
     private boolean panelEmpty(){
-        Component[] componentsPanel = panelGrafica.getComponents();
-        return componentsPanel.length ==0;
+        Component[] componentsPanel = this.getComponents();
+        return componentsPanel.length == 0;
     }
     
     private void transGrafica(JFreeChart tipoGrafico){
         if(!panelEmpty())
-            panelGrafica.remove(panel);
+            this.remove(panel);
         panel = new ChartPanel(tipoGrafico);
-        panel.setPreferredSize(new Dimension(800,400));
         
-        panelGrafica.add(panel,BorderLayout.NORTH);
+        panel.setPreferredSize(new Dimension(this.WIDTH,300));
+        //System.out.println(this.HEIGHT);
+        
+        this.add(panel,BorderLayout.CENTER);
         panel.revalidate();
+       
         
     }
     public void iniGraficaPastel(String Titulo){
@@ -90,7 +100,7 @@ public class graficasBDD extends javax.swing.JPanel {
                 datasetCreado.setValue(i, hMapVal.get(i));
             else
                 datasetCreado.setValue(hMapTit.get(i), hMapVal.get(i));
-        
+            
         JFreeChart graficoPast = ChartFactory.createPieChart(Titulo,datasetCreado,true,true,false);
         transGrafica(graficoPast);
     }
@@ -105,6 +115,7 @@ public class graficasBDD extends javax.swing.JPanel {
         transGrafica(barChart);
         
     }
+    
     public graficasBDD() {
         initComponents();
 
@@ -119,32 +130,11 @@ public class graficasBDD extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        panelGrafica = new javax.swing.JPanel();
-
         setPreferredSize(new java.awt.Dimension(450, 300));
-
-        panelGrafica.setLayout(new java.awt.BorderLayout());
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(panelGrafica, javax.swing.GroupLayout.DEFAULT_SIZE, 386, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(panelGrafica, javax.swing.GroupLayout.DEFAULT_SIZE, 260, Short.MAX_VALUE)
-                .addContainerGap())
-        );
+        setLayout(new java.awt.BorderLayout());
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel panelGrafica;
     // End of variables declaration//GEN-END:variables
 }

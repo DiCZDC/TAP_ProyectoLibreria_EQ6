@@ -349,19 +349,19 @@ public class RegLibro extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    private void saveData(int idAutor,int idEditorial){
+    private void saveData(int idAutor,long idEditorial){
         try {
                 
 
-                PreparedStatement ps = cn.prepareStatement("INSERT INTO libro (codigoBarras,existencia en tienda,ISBN,titulo,precio,existencia total, idEditorial) VALUES (?,?,?,?,?,?,?)");
+                PreparedStatement ps = cn.prepareStatement("INSERT INTO libro (codigoBarras,existencia_tienda,ISBN,titulo,precio,existencia_total, idEditorial) VALUES (?,?,?,?,?,?,?)");
 
-                ps.setInt(1, Integer.parseInt(txtBarcode.getText()));
+                ps.setLong(1, Long.parseLong(txtBarcode.getText()));
                 ps.setInt(2, 0);
                 ps.setString(3, txtISBN.getText());
                 ps.setString(4, txtTitulo.getText());
-                ps.setInt(5, Integer.parseInt(txtPrecio.getText()));
+                ps.setDouble(5, Double.parseDouble(txtPrecio.getText()));
                 ps.setInt(6,0);
-                ps.setInt(7, idEditorial);
+                ps.setLong(7, idEditorial);
                 ps.executeUpdate();
                 
                 PreparedStatement ps2 = cn.prepareStatement("INSERT INTO escribir (codigoBarras,idAutor) VALUES(?,?)");

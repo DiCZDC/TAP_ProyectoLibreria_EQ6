@@ -26,6 +26,7 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
+                  <Component id="btnVentanaGraficas" min="-2" pref="163" max="-2" attributes="0"/>
                   <Component id="btnVentanaVentas" min="-2" pref="163" max="-2" attributes="0"/>
                   <Component id="btnRegAutor" min="-2" pref="163" max="-2" attributes="0"/>
                   <Component id="btnRegEditorial" min="-2" pref="163" max="-2" attributes="0"/>
@@ -46,7 +47,9 @@
               <Component id="btnRegAutor" min="-2" pref="35" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="btnVentanaVentas" min="-2" pref="35" max="-2" attributes="0"/>
-              <EmptySpace pref="114" max="32767" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Component id="btnVentanaGraficas" min="-2" pref="35" max="-2" attributes="0"/>
+              <EmptySpace pref="61" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -54,7 +57,7 @@
   <SubComponents>
     <Component class="javax.swing.JButton" name="btnRegLibro">
       <Properties>
-        <Property name="text" type="java.lang.String" value="registrar libro"/>
+        <Property name="text" type="java.lang.String" value="Registrar libro"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRegLibroActionPerformed"/>
@@ -62,7 +65,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnRegEditorial">
       <Properties>
-        <Property name="text" type="java.lang.String" value="editar tabla editorial"/>
+        <Property name="text" type="java.lang.String" value="Editar tabla editorial"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRegEditorialActionPerformed"/>
@@ -70,7 +73,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnRegAutor">
       <Properties>
-        <Property name="text" type="java.lang.String" value="editar tabla autor"/>
+        <Property name="text" type="java.lang.String" value="Editar tabla autor"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRegAutorActionPerformed"/>
@@ -78,10 +81,18 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnVentanaVentas">
       <Properties>
-        <Property name="text" type="java.lang.String" value="vizualizar ventas"/>
+        <Property name="text" type="java.lang.String" value="Visualizar ventas"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnVentanaVentasActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnVentanaGraficas">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Visualizar Gr&#xe1;ficas"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnVentanaGraficasActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

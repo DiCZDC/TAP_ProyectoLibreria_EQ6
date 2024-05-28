@@ -33,34 +33,42 @@ public class VentanaGerente extends javax.swing.JDialog {
         btnRegEditorial = new javax.swing.JButton();
         btnRegAutor = new javax.swing.JButton();
         btnVentanaVentas = new javax.swing.JButton();
+        btnVentanaGraficas = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        btnRegLibro.setText("registrar libro");
+        btnRegLibro.setText("Registrar libro");
         btnRegLibro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRegLibroActionPerformed(evt);
             }
         });
 
-        btnRegEditorial.setText("editar tabla editorial");
+        btnRegEditorial.setText("Editar tabla editorial");
         btnRegEditorial.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRegEditorialActionPerformed(evt);
             }
         });
 
-        btnRegAutor.setText("editar tabla autor");
+        btnRegAutor.setText("Editar tabla autor");
         btnRegAutor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRegAutorActionPerformed(evt);
             }
         });
 
-        btnVentanaVentas.setText("vizualizar ventas");
+        btnVentanaVentas.setText("Visualizar ventas");
         btnVentanaVentas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnVentanaVentasActionPerformed(evt);
+            }
+        });
+
+        btnVentanaGraficas.setText("Visualizar Gráficas");
+        btnVentanaGraficas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVentanaGraficasActionPerformed(evt);
             }
         });
 
@@ -71,6 +79,7 @@ public class VentanaGerente extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addGap(33, 33, 33)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnVentanaGraficas, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnVentanaVentas, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnRegAutor, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnRegEditorial, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -88,7 +97,9 @@ public class VentanaGerente extends javax.swing.JDialog {
                 .addComponent(btnRegAutor, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnVentanaVentas, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(114, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(btnVentanaGraficas, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(61, Short.MAX_VALUE))
         );
 
         pack();
@@ -114,6 +125,10 @@ public class VentanaGerente extends javax.swing.JDialog {
         new VentanaVentas(null, rootPaneCheckingEnabled);      
         
     }//GEN-LAST:event_btnVentanaVentasActionPerformed
+
+    private void btnVentanaGraficasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVentanaGraficasActionPerformed
+        new VentanaGraficas(null, rootPaneCheckingEnabled).setVisible(true);
+    }//GEN-LAST:event_btnVentanaGraficasActionPerformed
 
     /**
      * @param args the command line arguments
@@ -161,6 +176,7 @@ public class VentanaGerente extends javax.swing.JDialog {
     private javax.swing.JButton btnRegAutor;
     private javax.swing.JButton btnRegEditorial;
     private javax.swing.JButton btnRegLibro;
+    private javax.swing.JButton btnVentanaGraficas;
     private javax.swing.JButton btnVentanaVentas;
     // End of variables declaration//GEN-END:variables
 }
