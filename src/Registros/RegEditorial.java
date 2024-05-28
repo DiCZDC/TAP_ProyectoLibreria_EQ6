@@ -4,7 +4,7 @@
  */
 package Registros;
 
-import Conector.Conexion;
+import Controlador.Conexion;
 import java.sql.*;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;

@@ -4,7 +4,7 @@
  */
 package Ventanas;
 
-import Conector.Conexion;
+import Controlador.Conexion;
 import java.sql.*;
 import java.util.Locale;
 import java.util.logging.Level;

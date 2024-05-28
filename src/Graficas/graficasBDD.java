@@ -4,7 +4,7 @@
  */
 package Graficas;
 
-import Conector.Conexion;
+import Controlador.Conexion;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;

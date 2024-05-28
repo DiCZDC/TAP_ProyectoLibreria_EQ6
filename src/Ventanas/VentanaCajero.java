@@ -4,7 +4,7 @@
  */
 package Ventanas;
 
-import Conector.Conexion;
+import Controlador.Conexion;
 import emailClases.pdfGenerator;
 import java.io.*;
 import java.sql.*;

@@ -9,7 +9,7 @@ package Ventanas;
  * @author raulch
  */
 import java.sql.*;
-import Conector.Conexion;
+import Controlador.Conexion;
 
 
 public class panelInfoLibro extends javax.swing.JPanel {

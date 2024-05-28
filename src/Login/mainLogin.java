@@ -4,7 +4,7 @@
  */
 package Login;
 
-import Conector.Conexion;
+import Controlador.Conexion;
 import Ventanas.*;
 import java.sql.*;
 import javax.swing.JOptionPane;
