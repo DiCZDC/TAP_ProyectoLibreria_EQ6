@@ -41,10 +41,11 @@ public class VentanaGraficas extends javax.swing.JDialog {
 
         panelGraficas.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 4, true));
 
-        jLabel2.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Gráficas");
 
+        btnLibrosVendidos.setBackground(new java.awt.Color(153, 153, 153));
         btnLibrosVendidos.setText("Libros más vendidos");
         btnLibrosVendidos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -52,6 +53,7 @@ public class VentanaGraficas extends javax.swing.JDialog {
             }
         });
 
+        btnLibrosEditorial.setBackground(new java.awt.Color(153, 153, 153));
         btnLibrosEditorial.setText("Libros por editorial");
         btnLibrosEditorial.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -59,6 +61,7 @@ public class VentanaGraficas extends javax.swing.JDialog {
             }
         });
 
+        btnLibrosPAutor.setBackground(new java.awt.Color(153, 153, 153));
         btnLibrosPAutor.setText("Cantidad de libros p/ Autor");
         btnLibrosPAutor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -66,6 +69,7 @@ public class VentanaGraficas extends javax.swing.JDialog {
             }
         });
 
+        btnTipoEmpleados.setBackground(new java.awt.Color(153, 153, 153));
         btnTipoEmpleados.setText("Tipos de empleados");
         btnTipoEmpleados.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -146,7 +150,7 @@ public class VentanaGraficas extends javax.swing.JDialog {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("windows".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }

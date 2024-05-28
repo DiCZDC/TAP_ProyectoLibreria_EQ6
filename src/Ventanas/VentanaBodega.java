@@ -68,6 +68,9 @@ public class VentanaBodega extends javax.swing.JDialog {
         setBackground(new java.awt.Color(180, 211, 178));
         setName("JFProductos"); // NOI18N
 
+        panelDatos.setBackground(new java.awt.Color(255, 255, 255));
+        panelDatos.setBorder(javax.swing.BorderFactory.createTitledBorder("Movimiento de Libros"));
+
         cboBarcode.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " " }));
         cboBarcode.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -113,7 +116,7 @@ public class VentanaBodega extends javax.swing.JDialog {
                     .addGroup(panelDatosLayout.createSequentialGroup()
                         .addComponent(btnSalida)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(cboAlmacen, 0, 132, Short.MAX_VALUE)
+                    .addComponent(cboAlmacen, 0, 179, Short.MAX_VALUE)
                     .addComponent(cboBarcode, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jsCantidad))
                 .addContainerGap())
@@ -140,21 +143,22 @@ public class VentanaBodega extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        panelInfo.setBackground(new java.awt.Color(255, 196, 167));
+        panelInfo.setBorder(javax.swing.BorderFactory.createTitledBorder("Información de libro"));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(panelDatos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(panelInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 390, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(panelDatos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(panelInfo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(panelInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
         );
 
         pack();
@@ -261,7 +265,7 @@ public class VentanaBodega extends javax.swing.JDialog {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("windows".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }

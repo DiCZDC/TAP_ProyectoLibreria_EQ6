@@ -87,7 +87,7 @@ public class RegEditorial extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        bgPanel.setBackground(new java.awt.Color(249, 247, 232));
+        bgPanel.setBackground(new java.awt.Color(234, 228, 185));
         bgPanel.setLayout(new java.awt.GridLayout(1, 3));
 
         panelTabla.setBorder(javax.swing.BorderFactory.createTitledBorder("Lista de editoriales"));
@@ -409,7 +409,7 @@ public class RegEditorial extends javax.swing.JDialog {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("windows".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }

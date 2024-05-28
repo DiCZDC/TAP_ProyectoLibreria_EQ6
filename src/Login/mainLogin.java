@@ -244,7 +244,6 @@ public class mainLogin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void windowHeaderMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_windowHeaderMouseDragged
-
         this.setLocation(evt.getXOnScreen()-xMouse, evt.getYOnScreen()-yMouse);
     }//GEN-LAST:event_windowHeaderMouseDragged
 
@@ -317,7 +316,7 @@ public class mainLogin extends javax.swing.JFrame {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("Windows".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
