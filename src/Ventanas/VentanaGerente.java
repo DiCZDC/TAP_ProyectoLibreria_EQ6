@@ -8,9 +8,9 @@ package Ventanas;
  *
  * @author Zaidc
  */
+import Vista.RegLibro;
 import Vista.RegEditorial;
 import Vista.RegAutor;
-import Registros.*;
 
 public class VentanaGerente extends javax.swing.JDialog {
 
@@ -128,22 +128,18 @@ public class VentanaGerente extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRegLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegLibroActionPerformed
-        // TODO add your handling code here:
         new RegLibro(null, rootPaneCheckingEnabled).setVisible(true);
     }//GEN-LAST:event_btnRegLibroActionPerformed
 
     private void btnRegEditorialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegEditorialActionPerformed
-        // TODO add your handling code here:
         new RegEditorial(null, rootPaneCheckingEnabled).setVisible(true);
     }//GEN-LAST:event_btnRegEditorialActionPerformed
 
     private void btnRegAutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegAutorActionPerformed
-        // TODO add your handling code here:
         new RegAutor(null, rootPaneCheckingEnabled).setVisible(true);
     }//GEN-LAST:event_btnRegAutorActionPerformed
 
     private void btnVentanaVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVentanaVentasActionPerformed
-        // TODO add your handling code here:
         new VentanaVentas(null, rootPaneCheckingEnabled);      
         
     }//GEN-LAST:event_btnVentanaVentasActionPerformed

@@ -7,6 +7,8 @@ package Modelo;
 import Modelo.*;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -17,6 +19,7 @@ public class registroFunciones {
     Conexion con = new Conexion();
     Connection cn = con.conectar();
     
+    //GENERALES
     public ArrayList<String[]> leerDatos(String tituloTabla, int ancho){
        
        ArrayList <String[]> dataTabla = new ArrayList <String[]>();
@@ -36,7 +39,31 @@ public class registroFunciones {
        
        return dataTabla;
     }
-    
+    public int getId(String tituloTabla,String referencia,String datoBusqueda, int pos){
+        int idDevuelta = 0;
+        try {
+            PreparedStatement ps = cn.prepareStatement("SELECT * FROM "+tituloTabla+" WHERE "+referencia);
+            ps.setString(1, datoBusqueda);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next())
+                idDevuelta = Integer.parseInt(rs.getString(pos));
+        } catch (SQLException ex) {
+            Logger.getLogger(registroFunciones.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return idDevuelta;
+    }
+    public ArrayList<String> cboArray(String tituloTabla,int pos){
+        ArrayList<String> salida = new ArrayList<String>();
+        try {
+            ResultSet rs = cn.createStatement().executeQuery("SELECT * FROM "+tituloTabla);
+            while (rs.next()) 
+                salida.add(rs.getString(pos));
+            
+        } catch (SQLException ex) {
+            System.out.println("Error al mostrar los datos de la BD"+ex);
+        }
+        return salida;
+    }
     
     //Autor exclusivas
     public boolean regAutor(String nombre,String pais, String idioma,String pagWeb){
@@ -72,6 +99,7 @@ public class registroFunciones {
             }
         return true;
     }
+    
     
     //EDITORIAL EXCLUSIVAS
     
@@ -112,17 +140,33 @@ public class registroFunciones {
     }
     
     //LIBRO EXCLUSIVAS
-    public ArrayList<String> cboArray(String tituloTabla,int pos){
-        ArrayList<String> salida = new ArrayList<String>();
+    
+    public boolean regLibro(int idAutor,int idEditorial,long barcode,String ISBN, String titulo,Double precio){
+        System.out.println(idEditorial);
         try {
-            ResultSet rs = cn.createStatement().executeQuery("SELECT * FROM "+tituloTabla);
-            while (rs.next()) 
-                salida.add(rs.getString(pos));
-            
-        } catch (SQLException ex) {
-            System.out.println("Error al mostrar los datos de la BD"+ex);
-        }
-        return salida;
+                PreparedStatement ps = cn.prepareStatement("INSERT INTO libro (codigoBarras,existencia_tienda,ISBN,titulo,precio,existencia_total, idEditorial) VALUES (?,?,?,?,?,?,?)");
+                
+                ps.setLong(1, barcode);
+                ps.setInt(2, 0);
+                ps.setString(3, ISBN);
+                ps.setString(4, titulo);
+                ps.setDouble(5, precio);
+                ps.setInt(6,0);
+                ps.setInt(7, idEditorial);
+                ps.executeUpdate();
+                
+                PreparedStatement ps2 = cn.prepareStatement("INSERT INTO escribir (codigoBarras,idAutor) VALUES(?,?)");
+                ps2.setLong(1, barcode);
+                ps2.setInt(2, idAutor);
+                ps2.executeUpdate();
+                
+                JOptionPane.showMessageDialog(null, "Datos guardados correctamente.");
+                
+            } catch (SQLException e) {
+                System.out.println("Error al guardar los productos en la BD "+e);
+                return false;
+            }
+        return true;
     }
     
 }

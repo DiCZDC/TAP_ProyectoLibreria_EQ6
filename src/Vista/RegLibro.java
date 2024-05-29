@@ -2,14 +2,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
  */
-package Registros;
+package Vista;
 
-import Modelo.Conexion;
 import Modelo.*;
 import com.itextpdf.barcodes.BarcodeEAN;
 import com.itextpdf.barcodes.BarcodePDF417;
 import java.awt.*;
-import java.sql.*;
 import java.util.ArrayList;
 import java.util.logging.*;
 import javax.swing.ImageIcon;
@@ -21,8 +19,6 @@ import javax.swing.JOptionPane;
  */
 public class RegLibro extends javax.swing.JDialog {
 
-    Conexion con = new Conexion();
-    Connection cn = con.conectar();
     registroFunciones regfun = new registroFunciones();
     public RegLibro(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -347,80 +343,41 @@ public class RegLibro extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    private void saveData(int idAutor,long idEditorial){
-        try {
-                
-
-                PreparedStatement ps = cn.prepareStatement("INSERT INTO libro (codigoBarras,existencia_tienda,ISBN,titulo,precio,existencia_total, idEditorial) VALUES (?,?,?,?,?,?,?)");
-
-                ps.setLong(1, Long.parseLong(txtBarcode.getText()));
-                ps.setInt(2, 0);
-                ps.setString(3, txtISBN.getText());
-                ps.setString(4, txtTitulo.getText());
-                ps.setDouble(5, Double.parseDouble(txtPrecio.getText()));
-                ps.setInt(6,0);
-                ps.setLong(7, idEditorial);
-                ps.executeUpdate();
-                
-                PreparedStatement ps2 = cn.prepareStatement("INSERT INTO escribir (codigoBarras,idAutor) VALUES(?,?)");
-                ps2.setLong(1, Long.parseLong(txtBarcode.getText()));
-                ps2.setInt(2, idAutor);
-                ps2.executeUpdate();
-                
-                JOptionPane.showMessageDialog(null, "Datos guardados correctamente.");
-                
-                limpiarCampos();
-            } catch (SQLException e) {
-                System.out.println("Error al guardar los productos en la BD "+e);
-            }
-    }
+    
+    
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         int idAu,idEd;
         idAu = 0;
         idEd=0;
         if(cboAutor.getSelectedIndex() > 0 && cboEditorial.getSelectedIndex() > 0){
-            try {
-                PreparedStatement ps = cn.prepareStatement("SELECT * FROM autor WHERE nombre =?");
-                ps.setString(1, cboAutor.getSelectedItem().toString());
-                ResultSet rs = ps.executeQuery();
-                if(rs.next()) 
-                    idAu = Integer.parseInt(rs.getString(1));
-
-                ps = cn.prepareStatement("SELECT * FROM editorial WHERE nombre =?");
-                ps.setString(1, cboEditorial.getSelectedItem().toString());
-                rs = ps.executeQuery();
-                if(rs.next())    
-                    idEd = Integer.parseInt(rs.getString(1));
-
-            } catch (SQLException ex) {
-                Logger.getLogger(RegLibro.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            
-            
+            idAu = regfun.getId("autor", "nombre=?",cboAutor.getSelectedItem().toString(), 1);
+            idEd = regfun.getId("editorial", "nombre=?", cboEditorial.getSelectedItem().toString(), 1);
             
             try {
                 showBarcode(txtBarcode.getText());
             } catch (Exception ex) {
                 Logger.getLogger(RegLibro.class.getName()).log(Level.SEVERE, null, ex);
             }
+            
         }else
             JOptionPane.showMessageDialog(null, "Por favor seleccione casillas validas");
         
+        if(regfun.regLibro(idAu,idEd,Long.parseLong(txtBarcode.getText()),txtISBN.getText(),txtTitulo.getText(),Double.parseDouble(txtPrecio.getText())))
+                limpiarCampos();
         
-        saveData(idAu,idEd);
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     private void CancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelarActionPerformed
         limpiarCampos();
     }//GEN-LAST:event_CancelarActionPerformed
+    
     private void showBarcode(String code) throws Exception {
         BarcodePDF417 barcode = new BarcodePDF417();
-
-        barcode.setCode(code);
-        barcode.setAspectRatio(.9f);
         
-        lblbarcode.setIcon(new ImageIcon(barcode.createAwtImage(Color.BLACK, Color.WHITE)));
+            barcode.setCode(code);
+            barcode.setAspectRatio(.9f);
         
+            lblbarcode.setIcon(new ImageIcon(barcode.createAwtImage(Color.BLACK, Color.WHITE)));
     }
         
 
