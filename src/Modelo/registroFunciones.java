@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Controlador;
+package Modelo;
 
 import Modelo.*;
 import java.sql.*;
@@ -38,7 +38,7 @@ public class registroFunciones {
     }
     
     
-    
+    //Autor exclusivas
     public boolean regAutor(String nombre,String pais, String idioma,String pagWeb){
         try {
             PreparedStatement ps = cn.prepareStatement("INSERT INTO autor (nombre,pais,idiomaOrigen,url) VALUES (?,?,?,?)");
@@ -70,7 +70,59 @@ public class registroFunciones {
                 System.out.println("Error al actualizar los productos en la BD "+e);
                 return false;
             }
-        
         return true;
     }
+    
+    //EDITORIAL EXCLUSIVAS
+    
+    public boolean regEditorial(String nombre,int telefono, String pagWeb,String email,String direccion){
+        try {
+            PreparedStatement ps = cn.prepareStatement("INSERT INTO editorial (nombre,telefono,url,email,direccion) VALUES (?,?,?,?,?)");
+                ps.setString(1, nombre);
+                ps.setInt(2, telefono);
+                ps.setString(3, pagWeb);
+                ps.setString(4, email);
+                ps.setString(5, direccion);
+            ps.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Datos guardados correctamente.");
+            
+        } catch (SQLException e) {
+            System.out.println("Error al insertar los productos en la BD "+e);
+            return false;
+        }
+        return true;
+    }
+    public boolean editarEditorial(String nombre,int telefono, String pagWeb,String email,String direccion,int id){
+            try {
+                PreparedStatement ps = cn.prepareStatement("UPDATE editorial SET nombre=?,telefono=?,url=?,email=?,direccion=? WHERE idEditorial=?");
+                ps.setString(1, nombre);
+                ps.setInt(2, telefono);
+                ps.setString(3, pagWeb);
+                ps.setString(4, email);
+                ps.setString(5, direccion);
+                ps.setInt(6, id);
+                ps.executeUpdate();
+                JOptionPane.showMessageDialog(null, "Datos actualizados correctamente.");
+                
+            } catch (SQLException e) {
+                System.out.println("Error al actualizar los productos en la BD "+e);
+                return false;
+            }
+        return true;
+    }
+    
+    //LIBRO EXCLUSIVAS
+    public ArrayList<String> cboArray(String tituloTabla,int pos){
+        ArrayList<String> salida = new ArrayList<String>();
+        try {
+            ResultSet rs = cn.createStatement().executeQuery("SELECT * FROM "+tituloTabla);
+            while (rs.next()) 
+                salida.add(rs.getString(pos));
+            
+        } catch (SQLException ex) {
+            System.out.println("Error al mostrar los datos de la BD"+ex);
+        }
+        return salida;
+    }
+    
 }

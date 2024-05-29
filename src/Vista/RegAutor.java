@@ -4,6 +4,7 @@
  */
 package Vista;
 
+import Modelo.registroFunciones;
 import Controlador.*;
 import java.util.*;
 import javax.swing.JOptionPane;

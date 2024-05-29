@@ -2,19 +2,15 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
  */
-package Registros;
+package Vista;
 
-import Controlador.*;
-import Modelo.Conexion;
-import java.sql.*;
+import Modelo.*;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
     
 public class RegEditorial extends javax.swing.JDialog {
-    Conexion con = new Conexion();
-    Connection cn = con.conectar();
     registroFunciones regfun = new registroFunciones();
     private int fila = 0;
     
@@ -22,6 +18,10 @@ public class RegEditorial extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         mostrarDatos();
+    }
+    private void actualizar(){
+        mostrarDatos();
+        limpiarCampos();
     }
     private void mostrarDatos() {
         DefaultTableModel modelo = new DefaultTableModel();
@@ -336,48 +336,19 @@ public class RegEditorial extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        try {
-                PreparedStatement ps = cn.prepareStatement("INSERT INTO editorial (nombre,telefono,url,email,direccion) VALUES (?,?,?,?,?)");
-
-                ps.setString(1, txtNombre.getText());
-                ps.setInt(2, Integer.parseInt(txtTelefono.getText()));
-                ps.setString(3, txtPagWeb.getText());
-                ps.setString(4, txtEmail.getText());
-                ps.setString(5, txtDireccion.getText());
-                
-                ps.executeUpdate();
-                JOptionPane.showMessageDialog(null, "Datos guardados correctamente.");
-                mostrarDatos();
-                limpiarCampos();
-            } catch (SQLException e) {
-                System.out.println("Error al guardar los productos en la BD "+e);
-            }
+        if(regfun.regEditorial(txtNombre.getText(), Integer.parseInt(txtTelefono.getText()), txtPagWeb.getText(), txtEmail.getText(), txtDireccion.getText()))
+            actualizar();
     }//GEN-LAST:event_btnAceptarActionPerformed
-
+    
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        if(fila > 0){
-            try {
-                int id = Integer.parseInt(JTEditorial.getValueAt(fila, 0).toString());
-
-                PreparedStatement ps = cn.prepareStatement("UPDATE editorial SET nombre=?,telefono=?,url=?,email=?,direccion=? WHERE idEditorial=?");
-                ps.setString(1, txtNombre.getText());
-                ps.setInt(2, Integer.parseInt(txtTelefono.getText()));
-                ps.setString(3, txtPagWeb.getText());
-                ps.setString(4, txtEmail.getText());
-                ps.setString(5, txtDireccion.getText());
-                ps.setInt(6, id);
-                ps.executeUpdate();
-                JOptionPane.showMessageDialog(null, "Datos actualizados correctamente.");
-                mostrarDatos();
-                limpiarCampos();
-                fila = 0;
-            } catch (SQLException e) {
-                System.out.println("Error al actualizar los productos en la BD "+e);
-            }
-        }else{
+        if(fila > 0)
+            if(regfun.editarEditorial(txtNombre.getText(), Integer.parseInt(txtTelefono.getText()), txtPagWeb.getText(), txtEmail.getText(), txtDireccion.getText(),Integer.parseInt(JTEditorial.getValueAt(fila, 0).toString())))
+                actualizar();
+        else
             JOptionPane.showMessageDialog(null, "Seleccione un registro.");
-        }
+        
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void JTEditorialMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JTEditorialMouseClicked

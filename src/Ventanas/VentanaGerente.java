@@ -8,6 +8,7 @@ package Ventanas;
  *
  * @author Zaidc
  */
+import Vista.RegEditorial;
 import Vista.RegAutor;
 import Registros.*;
 

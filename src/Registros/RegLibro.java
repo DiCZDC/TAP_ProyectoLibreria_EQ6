@@ -5,10 +5,12 @@
 package Registros;
 
 import Modelo.Conexion;
+import Modelo.*;
 import com.itextpdf.barcodes.BarcodeEAN;
 import com.itextpdf.barcodes.BarcodePDF417;
 import java.awt.*;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.logging.*;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -21,27 +23,21 @@ public class RegLibro extends javax.swing.JDialog {
 
     Conexion con = new Conexion();
     Connection cn = con.conectar();
-    
+    registroFunciones regfun = new registroFunciones();
     public RegLibro(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         inicbos();
     }
+    
     public void inicbos(){
-        try {
-            String consulta = "SELECT * FROM autor";
-            ResultSet rs = cn.createStatement().executeQuery(consulta);
-            while (rs.next()) 
-                cboAutor.addItem(rs.getString(2));
-            
-            consulta = "SELECT * FROM editorial";
-            rs = cn.createStatement().executeQuery(consulta);
-            while (rs.next()) 
-                cboEditorial.addItem(rs.getString(2));
-            
-        } catch (SQLException e) {
-            System.out.println("Error al mostrar los datos de la BD"+e);
-        }
+        ArrayList<String> cboGenerator = regfun.cboArray("autor", 2);
+        for (int i = 0; i < cboGenerator.size(); i++) 
+            cboAutor.addItem(cboGenerator.get(i));
+        
+        cboGenerator = regfun.cboArray("editorial", 2);
+        for (int i = 0; i < cboGenerator.size(); i++) 
+            cboEditorial.addItem(cboGenerator.get(i));
     }
     public void limpiarCampos(){
         txtBarcode.setText("");

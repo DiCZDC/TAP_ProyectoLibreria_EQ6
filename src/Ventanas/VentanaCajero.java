@@ -5,6 +5,7 @@
 package Ventanas;
 
 import Modelo.Conexion;
+import Modelo.*;
 import Controlador.pdfGenerator;
 import java.io.*;
 import java.sql.*;

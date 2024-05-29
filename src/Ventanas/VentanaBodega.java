@@ -5,6 +5,7 @@
 package Ventanas;
 
 import Modelo.Conexion;
+import Modelo.*;
 import java.sql.*;
 import java.util.Locale;
 import java.util.logging.Level;
@@ -116,7 +117,7 @@ public class VentanaBodega extends javax.swing.JDialog {
                     .addGroup(panelDatosLayout.createSequentialGroup()
                         .addComponent(btnSalida)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(cboAlmacen, 0, 179, Short.MAX_VALUE)
+                    .addComponent(cboAlmacen, 0, 245, Short.MAX_VALUE)
                     .addComponent(cboBarcode, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jsCantidad))
                 .addContainerGap())
@@ -144,7 +145,6 @@ public class VentanaBodega extends javax.swing.JDialog {
         );
 
         panelInfo.setBackground(new java.awt.Color(255, 196, 167));
-        panelInfo.setBorder(javax.swing.BorderFactory.createTitledBorder("Información de libro"));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -152,13 +152,13 @@ public class VentanaBodega extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(panelDatos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(panelInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 390, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(panelInfo, javax.swing.GroupLayout.DEFAULT_SIZE, 326, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(panelDatos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(panelInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+            .addComponent(panelInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
