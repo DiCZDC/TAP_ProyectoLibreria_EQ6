@@ -1,4 +1,4 @@
-package emailClases;
+package Controlador;
 
 import java.awt.event.*;
 import java.io.*;

@@ -4,7 +4,7 @@
  */
 package Ventanas;
 
-import Controlador.Conexion;
+import Modelo.Conexion;
 import java.sql.*;
 import java.util.Locale;
 import java.util.logging.Level;
@@ -62,7 +62,7 @@ public class VentanaBodega extends javax.swing.JDialog {
         jLabel3 = new javax.swing.JLabel();
         btnEntrada = new javax.swing.JButton();
         btnSalida = new javax.swing.JButton();
-        panelInfo = new Ventanas.panelInfoLibro();
+        panelInfo = new Modelo.panelInfoLibro();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(new java.awt.Color(180, 211, 178));
@@ -307,6 +307,6 @@ public class VentanaBodega extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JSpinner jsCantidad;
     private javax.swing.JPanel panelDatos;
-    private Ventanas.panelInfoLibro panelInfo;
+    private Modelo.panelInfoLibro panelInfo;
     // End of variables declaration//GEN-END:variables
 }

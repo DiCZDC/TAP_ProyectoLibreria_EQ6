@@ -4,7 +4,7 @@
  */
 package Registros;
 
-import Controlador.Conexion;
+import Modelo.Conexion;
 import com.itextpdf.barcodes.BarcodeEAN;
 import com.itextpdf.barcodes.BarcodePDF417;
 import java.awt.*;

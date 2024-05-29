@@ -170,7 +170,7 @@
         </Component>
       </SubComponents>
     </Container>
-    <Component class="Ventanas.panelInfoLibro" name="panelInfo">
+    <Component class="Modelo.panelInfoLibro" name="panelInfo">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="a7" green="c4" red="ff" type="rgb"/>

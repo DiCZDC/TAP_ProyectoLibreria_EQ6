@@ -272,7 +272,7 @@
             </Container>
           </SubComponents>
         </Container>
-        <Component class="Ventanas.panelInfoLibro" name="panelInfo">
+        <Component class="Modelo.panelInfoLibro" name="panelInfo">
           <Properties>
             <Property name="opaque" type="boolean" value="false"/>
           </Properties>
@@ -400,7 +400,7 @@
                 <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtBarcodeKeyTyped"/>
               </Events>
             </Component>
-            <Component class="emailClases.EmailButton" name="btnAceptar">
+            <Component class="Controlador.EmailButton" name="btnAceptar">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Ejecutar pago"/>
               </Properties>

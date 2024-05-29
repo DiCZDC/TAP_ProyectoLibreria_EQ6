@@ -2,10 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
  */
-package Registros;
+package Vista;
 
-import Controlador.Conexion;
-import java.sql.*;
+import Controlador.*;
+import java.util.*;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -14,9 +14,7 @@ import javax.swing.table.DefaultTableModel;
  * @author Zaidc
  */
 public class RegAutor extends javax.swing.JDialog {
-
-    Conexion con = new Conexion();
-    Connection cn = con.conectar();
+    registroFunciones regfun = new registroFunciones();
     private int fila = 0;
     
     public RegAutor(java.awt.Frame parent, boolean modal) {
@@ -24,32 +22,26 @@ public class RegAutor extends javax.swing.JDialog {
         initComponents();
         mostrarDatos();
     }
-
+    private void actualizar(){
+        mostrarDatos();
+        limpiarCampos();
+        fila = 0;
+    }
+    
    private void mostrarDatos() {
         DefaultTableModel modelo = new DefaultTableModel();
         String [] cabeceras = {"ID","Nombre","Pais","Idioma","Pagina web"};
-        
         for(int i = 0; i < cabeceras.length; i++)
             modelo.addColumn(cabeceras[i]);
         
         
         JTAutores.setModel(modelo);
-        String consulta = "SELECT * FROM autor";
-        String data[] = new String[5];
-        Statement st;
-        try {
-            st = cn.createStatement();
-            ResultSet rs = st.executeQuery(consulta);
-            while (rs.next()) {
-                for(int i = 0; i < data.length; i++)
-                    data[i] = rs.getString(i+1);
-                modelo.addRow(data);
-            }
-        } catch (SQLException e) {
-            System.out.println("Error al mostrar los datos de la BD");
-        }
-    }
-    
+        
+        ArrayList <String[]> dataTabla = regfun.leerDatos("autor", cabeceras.length);
+        
+        for (int i = 0; i < dataTabla.size(); i++)
+           modelo.addRow(dataTabla.get(i));
+   }
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -311,20 +303,10 @@ public class RegAutor extends javax.swing.JDialog {
         txtPagWeb.setText("");
         txtPais.setText("");
     }
+    
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        try {
-            PreparedStatement ps = cn.prepareStatement("INSERT INTO autor (nombre,pais,idiomaOrigen,url) VALUES (?,?,?,?)");
-            ps.setString(1, txtNombre.getText());
-            ps.setString(2, txtPais.getText());
-            ps.setString(3, txtIdioma.getText());
-            ps.setString(4, txtPagWeb.getText());
-            ps.executeUpdate();
-            JOptionPane.showMessageDialog(null, "Datos guardados correctamente.");
-            mostrarDatos();
-            limpiarCampos();
-        } catch (SQLException e) {
-            System.out.println("Error al insertar los productos en la BD "+e);
-        }
+        if(regfun.regAutor(txtNombre.getText(), txtPais.getText(), txtIdioma.getText(), txtPagWeb.getText()))
+            actualizar();
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
@@ -340,27 +322,11 @@ public class RegAutor extends javax.swing.JDialog {
     }//GEN-LAST:event_JTAutoresMouseClicked
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        if(fila > 0){
-            try {
-                int id = Integer.parseInt(JTAutores.getValueAt(fila, 0).toString());
-                
-                PreparedStatement ps = cn.prepareStatement("UPDATE autor SET nombre=?,pais=?,idiomaOrigen=?,url=? WHERE idAutor=?");
-                ps.setString(1, txtNombre.getText());
-                ps.setString(2, txtPais.getText());
-                ps.setString(3, txtIdioma.getText());
-                ps.setString(4, txtPagWeb.getText());
-                ps.setInt(5, id);
-                ps.executeUpdate();
-                JOptionPane.showMessageDialog(null, "Datos actualizados correctamente.");
-                mostrarDatos();
-                limpiarCampos();
-                fila = 0;
-            } catch (SQLException e) {
-                System.out.println("Error al actualizar los productos en la BD "+e);
-            }
-        }else{
+        if(fila > 0)
+            if(regfun.editarAutor(txtNombre.getText(),txtPais.getText(),txtIdioma.getText(),txtPagWeb.getText(),Integer.parseInt(JTAutores.getValueAt(fila, 0).toString())))
+                actualizar();
+        else
             JOptionPane.showMessageDialog(null, "Seleccione un registro.");
-        }
     }//GEN-LAST:event_btnEditarActionPerformed
 
     /**

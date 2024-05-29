@@ -2,11 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package Login;
+package Vista;
 
-import Controlador.Conexion;
+import Controlador.*;
 import Ventanas.*;
-import java.sql.*;
 import javax.swing.JOptionPane;
 /**
  *
@@ -14,8 +13,6 @@ import javax.swing.JOptionPane;
  */
 public class mainLogin extends javax.swing.JFrame {
 
-    Conexion con = new Conexion();
-    Connection cn = con.conectar();
     int xMouse,yMouse;
     public mainLogin() {
         this.setLocation(200, 200);
@@ -70,11 +67,6 @@ public class mainLogin extends javax.swing.JFrame {
                 txtUserMouseClicked(evt);
             }
         });
-        txtUser.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtUserActionPerformed(evt);
-            }
-        });
 
         userLbl.setFont(new java.awt.Font("Source Sans Pro ExtraLight", 3, 18)); // NOI18N
         userLbl.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -113,16 +105,6 @@ public class mainLogin extends javax.swing.JFrame {
 
         txtPassword.setForeground(new java.awt.Color(102, 102, 102));
         txtPassword.setBorder(null);
-        txtPassword.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                txtPasswordMouseClicked(evt);
-            }
-        });
-        txtPassword.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtPasswordActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout pwPanelLayout = new javax.swing.GroupLayout(pwPanel);
         pwPanel.setLayout(pwPanelLayout);
@@ -256,41 +238,14 @@ public class mainLogin extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_btnExitActionPerformed
 
-    private void txtUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUserActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtUserActionPerformed
-
-    private void txtPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPasswordActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtPasswordActionPerformed
-
-    private void txtPasswordMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtPasswordMouseClicked
-        
-    }//GEN-LAST:event_txtPasswordMouseClicked
-
     private void txtUserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtUserMouseClicked
         txtUser.setText("");
     }//GEN-LAST:event_txtUserMouseClicked
 
     private void btnSiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSiguienteActionPerformed
-        String password = "";
-        int tipo = 3;
-        int id = 0;
-        try {
-            PreparedStatement ps = cn.prepareStatement("SELECT * FROM empleado WHERE usuario =?");
-                ps.setString(1, txtUser.getText());
-                ResultSet rs = ps.executeQuery();
-                
-                if(rs.next()) {
-                    password = rs.getString(11);
-                    id = Integer.parseInt(rs.getString(1));
-                }
-                tipo = Integer.parseInt(rs.getString(12));
-        } catch (SQLException e) {
-            System.out.println("Error al mostrar los datos de la BD"+e);
-        }
-        if(password.equals(txtPassword.getText()))
-            windowSelector(tipo,id);
+             int datos[] = new LoginFunciones().iniSesion(txtUser.getText(),txtPassword.getText());
+        if(datos[0] != -1 && datos[1]!= -1)
+            windowSelector(datos[1],datos[0]);
         else
             JOptionPane.showMessageDialog(null, "Contraseña erronea");
     }//GEN-LAST:event_btnSiguienteActionPerformed

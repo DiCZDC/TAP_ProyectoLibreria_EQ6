@@ -4,8 +4,10 @@
  */
 package Registros;
 
-import Controlador.Conexion;
+import Controlador.*;
+import Modelo.Conexion;
 import java.sql.*;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -13,6 +15,7 @@ import javax.swing.table.DefaultTableModel;
 public class RegEditorial extends javax.swing.JDialog {
     Conexion con = new Conexion();
     Connection cn = con.conectar();
+    registroFunciones regfun = new registroFunciones();
     private int fila = 0;
     
     public RegEditorial(java.awt.Frame parent, boolean modal) {
@@ -27,21 +30,14 @@ public class RegEditorial extends javax.swing.JDialog {
         for(int i = 0; i < cabeceras.length; i++)
             modelo.addColumn(cabeceras[i]);
         
+        ArrayList <String[]> dataTabla = regfun.leerDatos("editorial", cabeceras.length);
+        
+        for (int i = 0; i < dataTabla.size(); i++)
+           modelo.addRow(dataTabla.get(i));
+        
+        
         JTEditorial.setModel(modelo);
-        String consulta = "SELECT * FROM editorial";
-        String data[] = new String[cabeceras.length];
-        Statement st;
-        try {
-            st = cn.createStatement();
-            ResultSet rs = st.executeQuery(consulta);
-            while (rs.next()) {
-                for(int i = 0; i < data.length; i++)
-                    data[i] = rs.getString(i+1);
-                modelo.addRow(data);
-            }
-        } catch (SQLException e) {
-            System.out.println("Error al mostrar los datos de la BD");
-        }
+        
     }
     public void limpiarCampos(){
         txtDireccion.setText("");
@@ -342,7 +338,6 @@ public class RegEditorial extends javax.swing.JDialog {
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         try {
-
                 PreparedStatement ps = cn.prepareStatement("INSERT INTO editorial (nombre,telefono,url,email,direccion) VALUES (?,?,?,?,?)");
 
                 ps.setString(1, txtNombre.getText());

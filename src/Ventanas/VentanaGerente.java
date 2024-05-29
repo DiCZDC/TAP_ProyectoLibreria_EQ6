@@ -8,6 +8,7 @@ package Ventanas;
  *
  * @author Zaidc
  */
+import Vista.RegAutor;
 import Registros.*;
 
 public class VentanaGerente extends javax.swing.JDialog {

@@ -2,9 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
-package Graficas;
+package Modelo;
 
-import Controlador.Conexion;
+import Modelo.Conexion;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;

@@ -6,7 +6,7 @@ package Ventanas;
 
 import java.sql.*;
 import javax.swing.table.DefaultTableModel;
-import Controlador.Conexion;
+import Modelo.Conexion;
 import java.awt.Color;
 import javax.swing.JOptionPane;
 

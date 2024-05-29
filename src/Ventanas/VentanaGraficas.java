@@ -28,7 +28,7 @@ public class VentanaGraficas extends javax.swing.JDialog {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        panelGraficas = new Graficas.graficasBDD();
+        panelGraficas = new Modelo.graficasBDD();
         jLabel2 = new javax.swing.JLabel();
         btnLibrosVendidos = new javax.swing.JButton();
         btnLibrosEditorial = new javax.swing.JButton();
@@ -189,6 +189,6 @@ public class VentanaGraficas extends javax.swing.JDialog {
     private javax.swing.JButton btnTipoEmpleados;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private Graficas.graficasBDD panelGraficas;
+    private Modelo.graficasBDD panelGraficas;
     // End of variables declaration//GEN-END:variables
 }

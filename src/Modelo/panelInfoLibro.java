@@ -2,14 +2,14 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
-package Ventanas;
+package Modelo;
 
 /**
  *
  * @author raulch
  */
 import java.sql.*;
-import Controlador.Conexion;
+import Modelo.Conexion;
 
 
 public class panelInfoLibro extends javax.swing.JPanel {

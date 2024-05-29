@@ -4,8 +4,8 @@
  */
 package Ventanas;
 
-import Controlador.Conexion;
-import emailClases.pdfGenerator;
+import Modelo.Conexion;
+import Controlador.pdfGenerator;
 import java.io.*;
 import java.sql.*;
 import java.time.LocalDate;
@@ -62,7 +62,7 @@ public class VentanaCajero extends javax.swing.JDialog {
         jLabel7 = new javax.swing.JLabel();
         lblCambio = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
-        panelInfo = new Ventanas.panelInfoLibro();
+        panelInfo = new Modelo.panelInfoLibro();
         jPanel2 = new javax.swing.JPanel();
         JsCantidad = new javax.swing.JSpinner();
         btnAgregar = new javax.swing.JButton();
@@ -74,7 +74,7 @@ public class VentanaCajero extends javax.swing.JDialog {
         txtEmail = new javax.swing.JTextField();
         txtPago = new javax.swing.JTextField();
         txtBarcode = new javax.swing.JTextField();
-        btnAceptar = new emailClases.EmailButton();
+        btnAceptar = new Controlador.EmailButton();
         lblCajero = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -615,7 +615,7 @@ public class VentanaCajero extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JSpinner JsCantidad;
     private javax.swing.JPanel bgPanel;
-    private emailClases.EmailButton btnAceptar;
+    private Controlador.EmailButton btnAceptar;
     private javax.swing.JButton btnAgregar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JLabel jLabel1;
@@ -635,7 +635,7 @@ public class VentanaCajero extends javax.swing.JDialog {
     private javax.swing.JLabel lblIVA;
     private javax.swing.JLabel lblSubtot;
     private javax.swing.JLabel lblTotal;
-    private Ventanas.panelInfoLibro panelInfo;
+    private Modelo.panelInfoLibro panelInfo;
     private javax.swing.JPanel panelProductos;
     private javax.swing.JTextField txtBarcode;
     private javax.swing.JTextField txtEmail;
