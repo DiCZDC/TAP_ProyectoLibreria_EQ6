@@ -403,6 +403,228 @@ La clase `regEmpleado` es un diálogo modal que permite registrar nuevos emplead
 Esta clase facilita el registro de empleados en un sistema mediante un formulario interactivo y realiza operaciones de validación y almacenamiento de datos en una base de datos.
 
 
+### Descripción de la Clase `VentanaBodega`
+
+La clase `VentanaBodega` representa una ventana de interfaz gráfica que permite gestionar el movimiento de libros en un sistema de inventario de una bodega. Esta ventana muestra opciones para realizar entradas y salidas de libros, seleccionando el libro mediante su código de barras y especificando la cantidad. Además, proporciona la opción de seleccionar la dirección del almacén donde se realizarán las operaciones.
+
+### Tabla de Métodos de la Clase `VentanaBodega`
+
+| Nombre del Método            | Descripción                                                                                                                                              |
+|------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `inicbo()`                   | Inicializa los ComboBox con los datos recuperados de la base de datos (libros y almacenes).                                                              |
+| `salidaValida(int sal)`      | Verifica si la cantidad especificada para una salida de libros es válida.                                                                                 |
+| `salidaBodega()`             | Realiza la operación de salida de libros de la bodega, actualizando las existencias tanto en la bodega como en la tienda.                               |
+| `entradaBodega()`            | Realiza la operación de entrada de libros a la bodega, actualizando las existencias en el almacén correspondiente.                                       |
+| `limpiarCampos()`            | Limpia los campos de entrada después de realizar una operación de entrada o salida de libros.                                                             |
+| `btnEntradaActionPerformed()`| Maneja el evento de clic en el botón "Entrada", ejecutando la operación de entrada de libros y limpiando los campos después de la operación.         |
+| `btnSalidaActionPerformed()` | Maneja el evento de clic en el botón "Salida", ejecutando la operación de salida de libros y limpiando los campos después de la operación.           |
+| `main(String[] args)`        | Método principal que crea y muestra la ventana `VentanaBodega` cuando se ejecuta la aplicación.                                                          |
+
+### Detalle de la Clase `VentanaBodega`
+
+1. **Variables de Instancia:**
+   - `con` - Objeto de la clase `Conexion` para manejar la conexión a la base de datos.
+   - `cn` - Objeto de conexión a la base de datos.
+   - `idActAlm` - Almacena el ID del almacén actual seleccionado.
+
+2. **Métodos:**
+   - **`inicbo()`**: Recupera los datos de libros y almacenes de la base de datos y los inicializa en los ComboBox correspondientes.
+   - **`salidaValida(int sal)`**: Verifica si la cantidad especificada para la salida de libros es válida comparándola con el límite de existencias en el almacén.
+   - **`salidaBodega()`**: Realiza la operación de salida de libros de la bodega, actualizando las existencias tanto en el almacén como en la tienda.
+   - **`entradaBodega()`**: Realiza la operación de entrada de libros a la bodega, actualizando las existencias en el almacén correspondiente.
+   - **`limpiarCampos()`**: Limpia los campos de entrada después de realizar una operación de entrada o salida de libros.
+   - **`btnEntradaActionPerformed()`**: Maneja el evento de clic en el botón "Entrada", ejecutando la operación de entrada de libros y limpiando los campos después de la operación.
+   - **`btnSalidaActionPerformed()`**: Maneja el evento de clic en el botón "Salida", ejecutando la operación de salida de libros y limpiando los campos después de la operación.
+   - **`main(String[] args)`**: Método principal que crea y muestra la ventana `VentanaBodega` cuando se ejecuta la aplicación.
+
+3. **Componentes Gráficos:**
+   - `panelDatos` - Panel que contiene los componentes para ingresar datos de entrada y salida de libros.
+   - `cboBarcode` - ComboBox para seleccionar el código de barras del libro.
+   - `cboAlmacen` - ComboBox para seleccionar la dirección del almacén.
+   - `jsCantidad` - Spinner para ingresar la cantidad de libros.
+   - `btnEntrada` - Botón para realizar una operación de entrada de libros.
+   - `btnSalida` - Botón para realizar una operación de salida de libros.
+   - `panelInfo` - Panel de información del libro (`panelInfoLibro`) para mostrar los detalles del libro seleccionado.
+
+
+### Descripción de la Clase `VentanaCajero`
+
+La clase `VentanaCajero` representa la interfaz gráfica de un sistema de punto de venta para un cajero. Permite al cajero realizar transacciones de compra, generar tickets de compra en formato PDF, enviar tickets por correo electrónico y actualizar la base de datos con las transacciones realizadas.
+
+### Tabla de Métodos de la Clase `VentanaCajero`
+
+| Nombre del Método          | Descripción                                                                                                      |
+|----------------------------|------------------------------------------------------------------------------------------------------------------|
+| `VentanaCajero()`          | Constructor que inicializa la ventana del cajero, establece el ID del cajero y llama al método `iniTab()`.       |
+| `iniTab()`                 | Inicializa la tabla de productos en la interfaz gráfica del cajero.                                             |
+| `dataExists()`             | Verifica si los datos del producto ya existen en la tabla de productos.                                         |
+| `updateTabla()`            | Actualiza la tabla de productos con los datos del producto ingresado.                                            |
+| `copiasMinimas()`          | Verifica si hay suficientes copias disponibles de un producto en la tienda.                                     |
+| `updateLbl()`              | Actualiza los campos de subtotal, IVA y total en la interfaz gráfica del cajero.                                 |
+| `btnAgregarActionPerformed()` | Maneja el evento de agregar un producto a la tabla de productos.                                                |
+| `txtBarcodeActionPerformed()` | Maneja el evento de presionar "Enter" en el campo de código de barras, actualizando la información del libro.  |
+| `btnEliminarActionPerformed()` | Maneja el evento de eliminar un producto de la tabla de productos.                                               |
+| `pdfGen()`                 | Genera un archivo PDF con los datos de la transacción y retorna el archivo generado.                             |
+| `envioCorreo()`            | Configura y envía un correo electrónico con el archivo PDF adjunto.                                             |
+| `updateDatabase()`         | Actualiza la base de datos con la información de la transacción.                                                 |
+| `btnAceptarActionPerformed()` | Maneja el evento de aceptar la transacción, generando el PDF, enviando el correo y actualizando la base de datos. |
+| `txtPagoActionPerformed()` | Maneja el evento de ingresar el monto de pago e indica el cambio a devolver.                                     |
+
+### Detalle de la Clase
+
+1. **Variables de instancia:**
+   - `con` - Objeto de la clase `Conexion` para manejar la conexión a la base de datos.
+   - `cn` - Objeto de conexión a la base de datos.
+   - `modelo` - Modelo de tabla (`DefaultTableModel`) para la tabla de productos.
+   - `idCaja` - ID del cajero actual.
+
+2. **Métodos:**
+   - **`VentanaCajero(java.awt.Frame parent, boolean modal, int idCajero)`**: Constructor que inicializa la ventana del cajero, establece el ID del cajero y llama al método `iniTab()`.
+   - **`iniTab()`**: Inicializa la tabla de productos en la interfaz gráfica del cajero.
+   - **`dataExists()`**: Verifica si los datos del producto ya existen en la tabla de productos.
+   - **`updateTabla()`**: Actualiza la tabla de productos con los datos del producto ingresado.
+   - **`copiasMinimas()`**: Verifica si hay suficientes copias disponibles de un producto en la tienda.
+   - **`updateLbl()`**: Actualiza los campos de subtotal, IVA y total en la interfaz gráfica del cajero.
+   - **`btnAgregarActionPerformed()`**: Maneja el evento de agregar un producto a la tabla de productos.
+   - **`txtBarcodeActionPerformed()`**: Maneja el evento de presionar "Enter" en el campo de código de barras, actualizando la información del libro.
+   - **`btnEliminarActionPerformed()`**: Maneja el evento de eliminar un producto de la tabla de productos.
+   - **`pdfGen()`**: Genera un archivo PDF con los datos de la transacción y retorna el archivo generado.
+   - **`envioCorreo()`**: Configura y envía un correo electrónico con el archivo PDF adjunto.
+   - **`updateDatabase()`**: Actualiza la base de datos con la información de la transacción.
+   - **`btnAceptarActionPerformed()`**: Maneja el evento de aceptar la transacción, generando el PDF, enviando el correo y actualizando la base de datos.
+   - **`txtPagoActionPerformed()`**: Maneja el evento de ingresar el monto de pago e indica el cambio a devolver.
+
+3. **Componentes Gráficos:**
+   - Varios componentes gráficos como botones, etiquetas, campos de texto y una tabla para mostrar la información y manejar las transacciones.
+  
+
+### Descripción de la Clase `VentanaGerente`
+
+La clase `VentanaGerente` es una interfaz gráfica que proporciona funcionalidades específicas para el rol de gerente en un sistema de gestión de una librería. Permite al gerente registrar libros, editar la tabla de editoriales, editar la tabla de autores, visualizar las ventas y visualizar gráficas relacionadas con las ventas.
+
+### Tabla de Métodos de la Clase `VentanaGerente`
+
+| Nombre del Método          | Descripción                                                                                               |
+|----------------------------|-----------------------------------------------------------------------------------------------------------|
+| `VentanaGerente()`         | Constructor que inicializa la ventana del gerente y sus componentes gráficos.                            |
+| `btnRegLibroActionPerformed()`   | Maneja el evento de hacer clic en el botón "Registrar libro" para abrir la ventana de registro de libros (`RegLibro`). |
+| `btnRegEditorialActionPerformed()` | Maneja el evento de hacer clic en el botón "Editar tabla editorial" para abrir la ventana de edición de editoriales (`RegEditorial`). |
+| `btnRegAutorActionPerformed()`     | Maneja el evento de hacer clic en el botón "Editar tabla autor" para abrir la ventana de edición de autores (`RegAutor`). |
+| `btnVentanaVentasActionPerformed()` | Maneja el evento de hacer clic en el botón "Visualizar ventas" para abrir la ventana de visualización de ventas (`VentanaVentas`). |
+| `btnVentanaGraficasActionPerformed()` | Maneja el evento de hacer clic en el botón "Visualizar Gráficas" para abrir la ventana de visualización de gráficas (`VentanaGraficas`). |
+
+### Detalle de la Clase
+
+1. **Componentes Gráficos:**
+   - `btnRegLibro` - Botón para registrar un nuevo libro.
+   - `btnRegEditorial` - Botón para editar la tabla de editoriales.
+   - `btnRegAutor` - Botón para editar la tabla de autores.
+   - `btnVentanaVentas` - Botón para visualizar las ventas.
+   - `btnVentanaGraficas` - Botón para visualizar gráficas relacionadas con las ventas.
+
+2. **Métodos:**
+   - **`VentanaGerente()`**: Constructor que inicializa la ventana del gerente y sus componentes gráficos.
+   - **`btnRegLibroActionPerformed()`**: Maneja el evento de hacer clic en el botón "Registrar libro" para abrir la ventana de registro de libros (`RegLibro`).
+   - **`btnRegEditorialActionPerformed()`**: Maneja el evento de hacer clic en el botón "Editar tabla editorial" para abrir la ventana de edición de editoriales (`RegEditorial`).
+   - **`btnRegAutorActionPerformed()`**: Maneja el evento de hacer clic en el botón "Editar tabla autor" para abrir la ventana de edición de autores (`RegAutor`).
+   - **`btnVentanaVentasActionPerformed()`**: Maneja el evento de hacer clic en el botón "Visualizar ventas" para abrir la ventana de visualización de ventas (`VentanaVentas`).
+   - **`btnVentanaGraficasActionPerformed()`**: Maneja el evento de hacer clic en el botón "Visualizar Gráficas" para abrir la ventana de visualización de gráficas (`VentanaGraficas`).
+
+Esta clase ofrece una interfaz intuitiva y fácil de usar para que el gerente pueda realizar las tareas administrativas relacionadas con la gestión de libros y el seguimiento de las ventas.
+
+
+### Descripción de la Clase `VentanaGraficas`
+
+La clase `VentanaGraficas` es una interfaz gráfica que muestra diversas gráficas relacionadas con la gestión de una librería. Permite al usuario visualizar gráficas como los libros más vendidos, libros por editorial, cantidad de libros por autor y cantidad de empleados por tipo.
+
+### Tabla de Métodos de la Clase `VentanaGraficas`
+
+| Nombre del Método          | Descripción                                                                                               |
+|----------------------------|-----------------------------------------------------------------------------------------------------------|
+| `VentanaGraficas()`        | Constructor que inicializa la ventana de gráficas y sus componentes gráficos.                             |
+| `btnLibrosVendidosActionPerformed()`   | Maneja el evento de hacer clic en el botón "Libros más vendidos" para mostrar una gráfica de pastel con los libros más vendidos. |
+| `btnLibrosEditorialActionPerformed()` | Maneja el evento de hacer clic en el botón "Libros por editorial" para mostrar una gráfica de barras con la cantidad de libros por editorial. |
+| `btnLibrosPAutorActionPerformed()`     | Maneja el evento de hacer clic en el botón "Cantidad de libros p/ Autor" para mostrar una gráfica de barras con la cantidad de libros disponibles por autor. |
+| `btnTipoEmpleadosActionPerformed()`    | Maneja el evento de hacer clic en el botón "Tipos de empleados" para mostrar una gráfica de pastel con la cantidad de empleados por tipo. |
+
+### Detalle de la Clase
+
+1. **Componentes Gráficos:**
+   - `panelGraficas` - Panel que muestra las gráficas generadas.
+   - `btnLibrosVendidos` - Botón para mostrar la gráfica de los libros más vendidos.
+   - `btnLibrosEditorial` - Botón para mostrar la gráfica de libros por editorial.
+   - `btnLibrosPAutor` - Botón para mostrar la gráfica de cantidad de libros por autor.
+   - `btnTipoEmpleados` - Botón para mostrar la gráfica de cantidad de empleados por tipo.
+
+2. **Métodos:**
+   - **`VentanaGraficas()`**: Constructor que inicializa la ventana de gráficas y sus componentes gráficos.
+   - **`btnLibrosVendidosActionPerformed()`**: Maneja el evento de hacer clic en el botón "Libros más vendidos" para mostrar una gráfica de pastel con los libros más vendidos.
+   - **`btnLibrosEditorialActionPerformed()`**: Maneja el evento de hacer clic en el botón "Libros por editorial" para mostrar una gráfica de barras con la cantidad de libros por editorial.
+   - **`btnLibrosPAutorActionPerformed()`**: Maneja el evento de hacer clic en el botón "Cantidad de libros p/ Autor" para mostrar una gráfica de barras con la cantidad de libros disponibles por autor.
+   - **`btnTipoEmpleadosActionPerformed()`**: Maneja el evento de hacer clic en el botón "Tipos de empleados" para mostrar una gráfica de pastel con la cantidad de empleados por tipo.
+
+Esta clase brinda una forma visualmente atractiva y fácil de comprender para que los usuarios puedan analizar diferentes aspectos relacionados con la gestión de la librería mediante gráficas.
+
+
+### Descripción de la Clase `VentanaVentas`
+
+La clase `VentanaVentas` es una interfaz gráfica que permite visualizar las ventas realizadas en una tienda, así como los productos asociados a cada venta. Permite buscar una venta específica por su ID y mostrar los detalles de los productos vendidos en esa transacción.
+
+### Tabla de Métodos de la Clase `VentanaVentas`
+
+| Nombre del Método          | Descripción                                                                                               |
+|----------------------------|-----------------------------------------------------------------------------------------------------------|
+| `VentanaVentas()`          | Constructor que inicializa la ventana de ventas y sus componentes gráficos.                                |
+| `mostrarVentas()`          | Método para mostrar las ventas en la tabla de ventas.                                                      |
+| `mostrarProductos(String idVenta)` | Método para mostrar los productos asociados a una venta específica.                                       |
+
+### Detalle de la Clase
+
+1. **Componentes Gráficos:**
+   - `tablaVentas` - Tabla que muestra las ventas realizadas, con detalles como el ID de la venta, nombre del cliente, fecha de venta, correo del cliente y el cajero.
+   - `tablaProductos` - Tabla que muestra los productos asociados a una venta específica, con detalles como el código de barras, título, ISBN, precio, cantidad y subtotal.
+
+2. **Métodos:**
+   - **`VentanaVentas()`**: Constructor que inicializa la ventana de ventas y sus componentes gráficos. También muestra las ventas al inicializar la ventana.
+   - **`mostrarVentas()`**: Método que recupera las ventas de la base de datos y las muestra en la tabla de ventas.
+   - **`mostrarProductos(String idVenta)`**: Método que recupera los productos asociados a una venta específica identificada por su ID, y los muestra en la tabla de productos.
+
+3. **Funcionalidades Adicionales:**
+   - **Búsqueda por ID de Venta**: Permite al usuario buscar una venta específica por su ID, y muestra los detalles de los productos asociados a esa venta.
+
+Esta clase proporciona una interfaz fácil de usar para visualizar y buscar ventas, así como ver los detalles de los productos asociados a cada venta.
+
+
+### Descripción de la Clase `registroCapacitaciones`
+
+La clase `registroCapacitaciones` es una interfaz gráfica que permite agregar capacitaciones para empleados de bodega. Los datos ingresados se registran en la base de datos.
+
+### Tabla de Métodos de la Clase `registroCapacitaciones`
+
+| Nombre del Método                            | Descripción                                                                                               |
+|----------------------------------------------|-----------------------------------------------------------------------------------------------------------|
+| `registroCapacitaciones()`                   | Constructor que inicializa la ventana de registro de capacitaciones y sus componentes gráficos.           |
+| `setIdEmpleadoBodega(int idEmpleado)`        | Establece el ID del empleado de bodega para el cual se agregarán las capacitaciones.                      |
+| `agregarCapacitacionEmpleadoBodega()`        | Agrega la capacitación ingresada para el empleado de bodega en la base de datos.                          |
+
+### Detalle de la Clase
+
+1. **Componentes Gráficos:**
+   - `lblId` - Etiqueta que muestra el ID del empleado de bodega para el cual se agregarán las capacitaciones.
+   - `txtCapacitacion` - Campo de texto para ingresar el nombre y la descripción de la capacitación.
+   - `btnAgregar` - Botón para agregar la capacitación ingresada.
+
+2. **Métodos:**
+   - **`registroCapacitaciones()`**: Constructor que inicializa la ventana de registro de capacitaciones y sus componentes gráficos.
+   - **`setIdEmpleadoBodega(int idEmpleado)`**: Establece el ID del empleado de bodega para el cual se agregarán las capacitaciones.
+   - **`agregarCapacitacionEmpleadoBodega()`**: Método que agrega la capacitación ingresada para el empleado de bodega en la base de datos.
+
+3. **Funcionalidades Adicionales:**
+   - **Registro de Capacitaciones**: Permite al usuario ingresar el nombre y la descripción de una capacitación y agregarla para un empleado de bodega específico.
+
+Esta clase proporciona una interfaz para registrar nuevas capacitaciones para empleados de bodega en la base de datos.
+
+
 ## Controlador
 
 
@@ -462,6 +684,7 @@ Esta clase proporciona una forma sencilla de generar tickets de compra en format
 ### Descripción de la Clase `EmailButton`
 
 La clase `EmailButton` es una extensión de `JButton` que proporciona funcionalidad para enviar correos electrónicos desde una aplicación Java. Este botón está diseñado para ser agregado a interfaces gráficas de usuario (GUI) y permite al usuario enviar correos electrónicos de manera rápida y sencilla haciendo clic en el botón.
+**Para utilizar este boton es necesario generar un passcode con tu correo, aqui hay un tutorial de  como hacerlo https://youtu.be/kTcmbZqNiGw?si=jknVQVlOURRZOhJ6**
 
 ### Tabla de Métodos de la Clase `EmailButton`
 
