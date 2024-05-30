@@ -370,56 +370,37 @@ Esta clase es fundamental para gestionar la información de las editoriales en u
 
 
 
-### Descripción de la Clase `RegEditorial`
+Entendido, voy a crear las descripciones y las tablas de métodos para las clases proporcionadas en el código.
 
-La clase `RegEditorial` es una clase que extiende `JDialog` y proporciona una interfaz gráfica para gestionar las editoriales. Permite mostrar, agregar, editar y limpiar datos de editoriales mediante una conexión a la base de datos.
+### Descripción de la Clase `regEmpleado`
 
-### Tabla de Métodos de la Clase `RegEditorial`
+La clase `regEmpleado` es un diálogo modal que permite registrar nuevos empleados en un sistema. Proporciona un formulario interactivo donde se pueden ingresar los detalles del empleado, como nombre, teléfono, RFC, sueldo, fecha de nacimiento, tipo de usuario, entre otros. Además, la clase incluye funcionalidades para validar la entrada del usuario y almacenar la información en una base de datos.
 
-| Nombre del Método               | Descripción                                                                                         |
-|---------------------------------|-----------------------------------------------------------------------------------------------------|
-| `RegEditorial(java.awt.Frame parent, boolean modal)` | Constructor que inicializa los componentes del diálogo y muestra los datos de la tabla de editoriales. |
-| `actualizar()`                  | Actualiza la tabla de datos y limpia los campos de entrada.                                          |
-| `mostrarDatos()`                | Muestra los datos de las editoriales en la tabla a partir de la base de datos.                      |
-| `limpiarCampos()`               | Limpia todos los campos de entrada en el formulario.                                                 |
-| `btnAceptarActionPerformed(java.awt.event.ActionEvent evt)` | Maneja el evento de clic del botón "Aceptar", registrando una nueva editorial si los datos son válidos. |
-| `btnEditarActionPerformed(java.awt.event.ActionEvent evt)` | Maneja el evento de clic del botón "Editar", actualizando los datos de una editorial seleccionada.     |
-| `JTEditorialMouseClicked(java.awt.event.MouseEvent evt)` | Maneja el evento de clic en la tabla, cargando los datos de la editorial seleccionada en los campos.   |
-| `btnCancelarActionPerformed(java.awt.event.ActionEvent evt)` | Maneja el evento de clic del botón "Cancelar", limpiando todos los campos de entrada.                    |
+### Tabla de Métodos de la Clase `regEmpleado`
 
-### Detalle de la Clase
+| Nombre del Método                    | Descripción                                                                                                                                                                    |
+|-------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `regEmpleado(java.awt.Frame parent, boolean modal)` | Constructor de la clase que inicializa el diálogo de registro de empleados, estableciendo el padre y la modalidad del diálogo.                                              |
+| `cboTipoUsuarioActionPerformed(java.awt.event.ActionEvent evt)` | Método de evento que se activa cuando se selecciona un elemento en el combo box de tipo de usuario. Controla la habilitación/deshabilitación de otros campos según el tipo de usuario seleccionado. |
+| `btnAceptarActionPerformed(java.awt.event.ActionEvent evt)` | Método de evento que se activa cuando se hace clic en el botón "Aceptar" del formulario. Realiza la validación de los campos ingresados por el usuario y guarda la información en la base de datos. |
+| `mostrarUsuarios()`                 | Método que muestra todos los empleados registrados en una tabla dentro del diálogo. Obtienen los datos de la base de datos y los muestran en la tabla.                            |
+| `agregarGerente(int idEmpleado)`    | Método que agrega un empleado como gerente en la base de datos.                                                                                                                |
+| `agregarCajero(int idEmpleado, int numCaja)` | Método que agrega un empleado como cajero en la base de datos.                                                                                                                  |
+| `agregarEmpleadoBodega(int idEmpleado,int idAlmacen)` | Método que agrega un empleado como empleado de bodega en la base de datos.                                                                                                      |
+| `limpiarCampos()`                   | Método que limpia todos los campos del formulario.                                                                                                                              |
+| `cargarAlmacenes()`                 | Método que carga los almacenes disponibles en un combo box dentro del formulario, obteniéndolos de la base de datos.                                                          |
+| `main(String args[])`               | Método principal de la clase que inicia la aplicación y muestra el diálogo de registro de empleados.                                                                            |
 
-1. **Variables de instancia:**
-   - `registroFunciones regfun` - Objeto de la clase `registroFunciones` para realizar operaciones en la base de datos.
-   - `int fila` - Índice de la fila seleccionada en la tabla.
+### Detalle de la Clase `regEmpleado`
 
-2. **Métodos:**
-   - **`RegEditorial(java.awt.Frame parent, boolean modal)`**: Constructor que inicializa los componentes gráficos y muestra los datos de las editoriales en la tabla.
-   - **`actualizar()`**: Método privado que actualiza la tabla de datos y limpia los campos de entrada.
-   - **`mostrarDatos()`**: Método privado que muestra los datos de las editoriales en la tabla, leyendo los datos desde la base de datos.
-   - **`limpiarCampos()`**: Método público que limpia todos los campos de entrada en el formulario.
-   - **`btnAceptarActionPerformed(java.awt.event.ActionEvent evt)`**: Método de evento para manejar el clic en el botón "Aceptar". Registra una nueva editorial en la base de datos si los datos ingresados son válidos y actualiza la tabla.
-   - **`btnEditarActionPerformed(java.awt.event.ActionEvent evt)`**: Método de evento para manejar el clic en el botón "Editar". Edita los datos de la editorial seleccionada en la tabla y actualiza la base de datos.
-   - **`JTEditorialMouseClicked(java.awt.event.MouseEvent evt)`**: Método de evento para manejar el clic en una fila de la tabla. Carga los datos de la editorial seleccionada en los campos de entrada.
-   - **`btnCancelarActionPerformed(java.awt.event.ActionEvent evt)`**: Método de evento para manejar el clic en el botón "Cancelar". Limpia todos los campos de entrada del formulario.
+1. **Variables de Instancia:**
+   - `Conexion con` - Objeto de la clase `Conexion` para manejar la conexión a la base de datos.
+   - `Connection cn` - Objeto de conexión que se obtiene a través del método `conectar` de la clase `Conexion`.
 
-### Componentes Gráficos
+2. **Componentes Gráficos:**
+   - Varias instancias de componentes de interfaz gráfica, como etiquetas, campos de texto, combo boxes y botones, utilizados para recopilar información del usuario y mostrar datos.
 
-- **Paneles (`JPanel`):**
-  - `bgPanel` - Panel de fondo que contiene todos los demás componentes.
-  - `panelTabla` - Panel que contiene la tabla de editoriales.
-  - `panelEditorial` - Panel que contiene los campos de entrada para los datos de la editorial.
-  - `panelEmail`, `panelPweb`, `panelDireccion`, `panelTelefono`, `panelNombre` - Paneles que contienen etiquetas y campos de entrada específicos.
+Esta clase facilita el registro de empleados en un sistema mediante un formulario interactivo y realiza operaciones de validación y almacenamiento de datos en una base de datos.
 
-- **Tabla (`JTable`):**
-  - `JTEditorial` - Tabla que muestra la lista de editoriales.
 
-- **Botones (`JButton`):**
-  - `btnAceptar` - Botón para aceptar y registrar una nueva editorial.
-  - `btnCancelar` - Botón para cancelar y limpiar los campos de entrada.
-  - `btnEditar` - Botón para editar los datos de la editorial seleccionada.
-
-- **Campos de Texto (`JTextArea`):**
-  - `txtDireccion`, `txtEmail`, `txtNombre`, `txtPagWeb`, `txtTelefono` - Campos de texto para ingresar los datos de la editorial (dirección, email, nombre, página web, teléfono).
-
-Esta clase es fundamental para gestionar la información de las editoriales en una aplicación gráfica, permitiendo agregar, editar y visualizar las editoriales almacenadas en una base de datos.
+## Controlador
