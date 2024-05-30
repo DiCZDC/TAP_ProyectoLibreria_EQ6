@@ -367,3 +367,59 @@ La clase `RegEditorial` es una clase que extiende `JDialog` y proporciona una in
   - `txtDireccion`, `txtEmail`, `txtNombre`, `txtPagWeb`, `txtTelefono` - Campos de texto para ingresar los datos de la editorial (dirección, email, nombre, página web, teléfono).
 
 Esta clase es fundamental para gestionar la información de las editoriales en una aplicación gráfica, permitiendo agregar, editar y visualizar las editoriales almacenadas en una base de datos.
+
+
+
+### Descripción de la Clase `RegEditorial`
+
+La clase `RegEditorial` es una clase que extiende `JDialog` y proporciona una interfaz gráfica para gestionar las editoriales. Permite mostrar, agregar, editar y limpiar datos de editoriales mediante una conexión a la base de datos.
+
+### Tabla de Métodos de la Clase `RegEditorial`
+
+| Nombre del Método               | Descripción                                                                                         |
+|---------------------------------|-----------------------------------------------------------------------------------------------------|
+| `RegEditorial(java.awt.Frame parent, boolean modal)` | Constructor que inicializa los componentes del diálogo y muestra los datos de la tabla de editoriales. |
+| `actualizar()`                  | Actualiza la tabla de datos y limpia los campos de entrada.                                          |
+| `mostrarDatos()`                | Muestra los datos de las editoriales en la tabla a partir de la base de datos.                      |
+| `limpiarCampos()`               | Limpia todos los campos de entrada en el formulario.                                                 |
+| `btnAceptarActionPerformed(java.awt.event.ActionEvent evt)` | Maneja el evento de clic del botón "Aceptar", registrando una nueva editorial si los datos son válidos. |
+| `btnEditarActionPerformed(java.awt.event.ActionEvent evt)` | Maneja el evento de clic del botón "Editar", actualizando los datos de una editorial seleccionada.     |
+| `JTEditorialMouseClicked(java.awt.event.MouseEvent evt)` | Maneja el evento de clic en la tabla, cargando los datos de la editorial seleccionada en los campos.   |
+| `btnCancelarActionPerformed(java.awt.event.ActionEvent evt)` | Maneja el evento de clic del botón "Cancelar", limpiando todos los campos de entrada.                    |
+
+### Detalle de la Clase
+
+1. **Variables de instancia:**
+   - `registroFunciones regfun` - Objeto de la clase `registroFunciones` para realizar operaciones en la base de datos.
+   - `int fila` - Índice de la fila seleccionada en la tabla.
+
+2. **Métodos:**
+   - **`RegEditorial(java.awt.Frame parent, boolean modal)`**: Constructor que inicializa los componentes gráficos y muestra los datos de las editoriales en la tabla.
+   - **`actualizar()`**: Método privado que actualiza la tabla de datos y limpia los campos de entrada.
+   - **`mostrarDatos()`**: Método privado que muestra los datos de las editoriales en la tabla, leyendo los datos desde la base de datos.
+   - **`limpiarCampos()`**: Método público que limpia todos los campos de entrada en el formulario.
+   - **`btnAceptarActionPerformed(java.awt.event.ActionEvent evt)`**: Método de evento para manejar el clic en el botón "Aceptar". Registra una nueva editorial en la base de datos si los datos ingresados son válidos y actualiza la tabla.
+   - **`btnEditarActionPerformed(java.awt.event.ActionEvent evt)`**: Método de evento para manejar el clic en el botón "Editar". Edita los datos de la editorial seleccionada en la tabla y actualiza la base de datos.
+   - **`JTEditorialMouseClicked(java.awt.event.MouseEvent evt)`**: Método de evento para manejar el clic en una fila de la tabla. Carga los datos de la editorial seleccionada en los campos de entrada.
+   - **`btnCancelarActionPerformed(java.awt.event.ActionEvent evt)`**: Método de evento para manejar el clic en el botón "Cancelar". Limpia todos los campos de entrada del formulario.
+
+### Componentes Gráficos
+
+- **Paneles (`JPanel`):**
+  - `bgPanel` - Panel de fondo que contiene todos los demás componentes.
+  - `panelTabla` - Panel que contiene la tabla de editoriales.
+  - `panelEditorial` - Panel que contiene los campos de entrada para los datos de la editorial.
+  - `panelEmail`, `panelPweb`, `panelDireccion`, `panelTelefono`, `panelNombre` - Paneles que contienen etiquetas y campos de entrada específicos.
+
+- **Tabla (`JTable`):**
+  - `JTEditorial` - Tabla que muestra la lista de editoriales.
+
+- **Botones (`JButton`):**
+  - `btnAceptar` - Botón para aceptar y registrar una nueva editorial.
+  - `btnCancelar` - Botón para cancelar y limpiar los campos de entrada.
+  - `btnEditar` - Botón para editar los datos de la editorial seleccionada.
+
+- **Campos de Texto (`JTextArea`):**
+  - `txtDireccion`, `txtEmail`, `txtNombre`, `txtPagWeb`, `txtTelefono` - Campos de texto para ingresar los datos de la editorial (dirección, email, nombre, página web, teléfono).
+
+Esta clase es fundamental para gestionar la información de las editoriales en una aplicación gráfica, permitiendo agregar, editar y visualizar las editoriales almacenadas en una base de datos.
