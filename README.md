@@ -457,3 +457,43 @@ La clase `pdfGenerator` es una utilidad que permite generar un archivo PDF para 
    - **`crearPDF(File fof)`**: Método interno que crea el PDF con el formato del ticket de compra. Utiliza la biblioteca iText para crear el documento PDF con el título, texto y mensaje de despedida. Retorna el archivo donde se ha almacenado el PDF generado.
 
 Esta clase proporciona una forma sencilla de generar tickets de compra en formato PDF, permitiendo agregar texto dinámico y personalizado al ticket antes de generarlo.
+
+
+### Descripción de la Clase `EmailButton`
+
+La clase `EmailButton` es una extensión de `JButton` que proporciona funcionalidad para enviar correos electrónicos desde una aplicación Java. Este botón está diseñado para ser agregado a interfaces gráficas de usuario (GUI) y permite al usuario enviar correos electrónicos de manera rápida y sencilla haciendo clic en el botón.
+
+### Tabla de Métodos de la Clase `EmailButton`
+
+| Nombre del Método | Descripción                                                                                                                  |
+|-------------------|------------------------------------------------------------------------------------------------------------------------------|
+| `setEmail(String email)`          | Establece la dirección de correo electrónico del destinatario del correo.                                                  |
+| `setSubject(String subject)`      | Establece el asunto del correo electrónico.                                                                                 |
+| `setMessage(String message)`      | Establece el cuerpo del mensaje del correo electrónico.                                                                      |
+| `setAttachedFile(File attachedFile)` | Adjunta un archivo al correo electrónico.                                                                                    |
+| `sendEmail()`                      | Envía el correo electrónico con los parámetros especificados (destinatario, asunto, mensaje y archivo adjunto) utilizando las credenciales de autenticación proporcionadas. |
+
+### Detalle de la Clase `EmailButton`
+
+1. **Variables de Instancia:**
+   - `email` - La dirección de correo electrónico del destinatario.
+   - `subject` - El asunto del correo electrónico.
+   - `message` - El cuerpo del mensaje del correo electrónico.
+   - `attachedFile` - El archivo adjunto al correo electrónico.
+
+2. **Métodos:**
+   - **`setEmail(String email)`**: Establece la dirección de correo electrónico del destinatario.
+   - **`setSubject(String subject)`**: Establece el asunto del correo electrónico.
+   - **`setMessage(String message)`**: Establece el cuerpo del mensaje del correo electrónico.
+   - **`setAttachedFile(File attachedFile)`**: Adjunta un archivo al correo electrónico.
+   - **`sendEmail()`**: Envía el correo electrónico utilizando las credenciales de autenticación proporcionadas y los parámetros especificados (destinatario, asunto, mensaje y archivo adjunto).
+
+3. **Método `actionPerformed(ActionEvent e)`**:
+   - Este método se ejecuta cuando se hace clic en el botón.
+   - No se realiza ninguna acción específica en este método, ya que el proceso de envío de correo electrónico se maneja en el método `sendEmail()`. Se puede agregar lógica adicional aquí si es necesario.
+
+### Detalles Adicionales
+
+- La clase utiliza las bibliotecas JavaMail API para enviar correos electrónicos y MimeBodyPart para adjuntar archivos al correo electrónico.
+- Se proporciona una notificación al usuario mediante cuadros de diálogo JOptionPane para informar sobre el estado del envío del correo electrónico.
+
