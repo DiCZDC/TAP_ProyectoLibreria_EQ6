@@ -404,3 +404,56 @@ Esta clase facilita el registro de empleados en un sistema mediante un formulari
 
 
 ## Controlador
+
+
+### Descripción de la Clase `LoginFunciones`
+
+La clase `LoginFunciones` es una clase de controlador que proporciona funcionalidades relacionadas con el inicio de sesión en un sistema. Esta clase se encarga de validar las credenciales de un usuario (nombre de usuario y contraseña) comparándolas con los registros almacenados en una base de datos. Si las credenciales son válidas, la clase devuelve información adicional sobre el usuario, como su identificador y tipo de empleado.
+
+### Tabla de Métodos de la Clase `LoginFunciones`
+
+| Nombre del Método                   | Descripción                                                                                                                                                                                |
+|------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `iniSesion(String username,String givenPW)` | Método que inicia sesión de un usuario en el sistema. Recibe como parámetros el nombre de usuario y la contraseña proporcionados por el usuario al intentar iniciar sesión. Devuelve un array de enteros que contiene información sobre el resultado del inicio de sesión. |
+
+### Detalle de la Clase `LoginFunciones`
+
+1. **Variables de Instancia:**
+   - `con` - Instancia de la clase `Conexion` que gestiona la conexión a la base de datos.
+   - `cn` - Objeto de conexión a la base de datos obtenido mediante el método `conectar` de la clase `Conexion`.
+
+2. **Métodos:**
+   - **`iniSesion(String username,String givenPW)`**: Método que verifica las credenciales de inicio de sesión proporcionadas por el usuario comparándolas con los registros de la base de datos. Realiza las siguientes operaciones:
+     - Ejecuta una consulta SQL para buscar un empleado con el nombre de usuario proporcionado.
+     - Si se encuentra un empleado con ese nombre de usuario, recupera su contraseña y su tipo de empleado.
+     - Compara la contraseña recuperada con la contraseña proporcionada por el usuario.
+     - Si las contraseñas coinciden, devuelve un array de enteros con el ID del empleado y su tipo de empleado. Si no coinciden, devuelve valores especiales para indicar un fallo en el inicio de sesión.
+
+Este componente es útil para manejar el proceso de inicio de sesión de usuarios en un sistema, validando sus credenciales y proporcionando información adicional sobre el usuario en caso de un inicio de sesión exitoso.
+
+
+### Descripción de la Clase `pdfGenerator`
+
+La clase `pdfGenerator` es una utilidad que permite generar un archivo PDF para crear tickets de compra. Esta clase utiliza la biblioteca iText para generar el archivo PDF con un formato específico que incluye un título, texto descriptivo, y un mensaje de despedida. Además, proporciona métodos para agregar texto dinámicamente al ticket.
+
+### Tabla de Métodos de la Clase `pdfGenerator`
+
+| Nombre del Método    | Descripción                                                                                                                                                                      |
+|----------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `addText(String nuevaLinea)` | Método que permite agregar una nueva línea de texto al ticket de compra. Recibe como parámetro la nueva línea de texto que se desea agregar.                          |
+| `getTicket()`        | Método que genera y devuelve un archivo PDF que representa el ticket de compra.                                                                                                  |
+| `crearPDF(File fof)` | Método interno que crea el PDF con el formato del ticket de compra. Recibe como parámetro un archivo donde se almacenará el PDF generado y devuelve el mismo archivo. |
+
+### Detalle de la Clase `pdfGenerator`
+
+1. **Variables de Instancia:**
+   - `titulo` - Párrafo que contiene el título del ticket de compra.
+   - `texto1` - Párrafo que contiene el texto descriptivo del ticket de compra.
+   - `despedida` - Párrafo que contiene el mensaje de despedida del ticket de compra.
+
+2. **Métodos:**
+   - **`addText(String nuevaLinea)`**: Permite agregar una nueva línea de texto al ticket de compra. Este método es útil para agregar información dinámica al ticket, como detalles de los productos comprados.
+   - **`getTicket()`**: Genera y devuelve un archivo PDF que representa el ticket de compra. Este método invoca al método interno `crearPDF` para generar el PDF.
+   - **`crearPDF(File fof)`**: Método interno que crea el PDF con el formato del ticket de compra. Utiliza la biblioteca iText para crear el documento PDF con el título, texto y mensaje de despedida. Retorna el archivo donde se ha almacenado el PDF generado.
+
+Esta clase proporciona una forma sencilla de generar tickets de compra en formato PDF, permitiendo agregar texto dinámico y personalizado al ticket antes de generarlo.
