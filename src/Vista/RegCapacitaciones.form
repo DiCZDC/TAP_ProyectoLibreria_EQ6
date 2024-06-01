@@ -97,7 +97,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="lblId">
           <Properties>
-            <Property name="text" type="java.lang.String" value="capacitaciones para el empleado de bodega con el id: idEmpleado"/>
+            <Property name="text" type="java.lang.String" value="Capacitaciones para el empleado de bodega con el id: idEmpleado"/>
           </Properties>
         </Component>
       </SubComponents>

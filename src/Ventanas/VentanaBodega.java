@@ -7,6 +7,8 @@ package Ventanas;
 import Modelo.Conexion;
 import Modelo.*;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,27 +25,23 @@ public class VentanaBodega extends javax.swing.JDialog {
      */
     Conexion con = new Conexion();
     Connection cn = con.conectar();
+    registroFunciones regfun = new registroFunciones();
     int idActAlm = 0;
+    
     public VentanaBodega(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         inicbo();
     }
     public void inicbo(){
-        try {
-            String consulta = "SELECT * FROM libro";
-            ResultSet rs = cn.createStatement().executeQuery(consulta);
-            while (rs.next()) 
-                cboBarcode.addItem(rs.getString(1));
-            
-            consulta = "SELECT * FROM almacen";
-            rs = cn.createStatement().executeQuery(consulta);
-            while (rs.next()) 
-                cboAlmacen.addItem(rs.getString(2));
-            
-        } catch (SQLException e) {
-            System.out.println("Error al mostrar los datos de la BD"+e);
-        }
+        ArrayList<String> cboGenerator = regfun.cboArray("libro", 1);
+        for(String i: cboGenerator)
+            cboBarcode.addItem(i);
+        
+        cboGenerator = regfun.cboArray("almacen", 2);
+        for(String i: cboGenerator)
+            cboAlmacen.addItem(i);
+        
     }
     /**
      * This method is called from within the constructor to initialize the form.

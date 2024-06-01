@@ -8,9 +8,7 @@ package Ventanas;
  *
  * @author Zaidc
  */
-import Vista.RegLibro;
-import Vista.RegEditorial;
-import Vista.RegAutor;
+import Vista.*;
 
 public class VentanaGerente extends javax.swing.JDialog {
 
@@ -37,6 +35,7 @@ public class VentanaGerente extends javax.swing.JDialog {
         btnRegAutor = new javax.swing.JButton();
         btnVentanaVentas = new javax.swing.JButton();
         btnVentanaGraficas = new javax.swing.JButton();
+        btnRegEmpleado = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
@@ -83,6 +82,14 @@ public class VentanaGerente extends javax.swing.JDialog {
             }
         });
 
+        btnRegEmpleado.setBackground(new java.awt.Color(117, 193, 255));
+        btnRegEmpleado.setText("Registrar Empleado");
+        btnRegEmpleado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegEmpleadoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -90,6 +97,7 @@ public class VentanaGerente extends javax.swing.JDialog {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(40, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnRegEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnVentanaGraficas, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnVentanaVentas, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnRegAutor, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -110,6 +118,8 @@ public class VentanaGerente extends javax.swing.JDialog {
                 .addComponent(btnVentanaVentas, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnVentanaGraficas, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnRegEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(40, Short.MAX_VALUE))
         );
 
@@ -147,6 +157,10 @@ public class VentanaGerente extends javax.swing.JDialog {
     private void btnVentanaGraficasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVentanaGraficasActionPerformed
         new VentanaGraficas(null, rootPaneCheckingEnabled).setVisible(true);
     }//GEN-LAST:event_btnVentanaGraficasActionPerformed
+
+    private void btnRegEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegEmpleadoActionPerformed
+        new RegEmpleado(null, rootPaneCheckingEnabled).setVisible(true);
+    }//GEN-LAST:event_btnRegEmpleadoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -193,6 +207,7 @@ public class VentanaGerente extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnRegAutor;
     private javax.swing.JButton btnRegEditorial;
+    private javax.swing.JButton btnRegEmpleado;
     private javax.swing.JButton btnRegLibro;
     private javax.swing.JButton btnVentanaGraficas;
     private javax.swing.JButton btnVentanaVentas;

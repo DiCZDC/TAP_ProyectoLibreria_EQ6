@@ -2,23 +2,20 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
  */
-package Ventanas;
+package Vista;
 
-import Modelo.Conexion;
-import java.sql.*;
-import javax.swing.JOptionPane;
+import Modelo.registroFunciones;
 /**
  *
  * @author raulch
  */
 
 
-public class registroCapacitaciones extends javax.swing.JDialog {
-    Conexion con = new Conexion();
-    Connection cn = con.conectar();
+public class RegCapacitaciones extends javax.swing.JDialog {
+    registroFunciones regfun = new registroFunciones();
     public int idEmpleadoBodega;
     
-    public registroCapacitaciones(java.awt.Frame parent, boolean modal, int id) {
+    public RegCapacitaciones(java.awt.Frame parent, boolean modal, int id) {
         super(parent, modal);
         initComponents();
         setIdEmpleadoBodega(id);
@@ -54,7 +51,7 @@ public class registroCapacitaciones extends javax.swing.JDialog {
 
         jLabel2.setText("despues presione agregar");
 
-        lblId.setText("capacitaciones para el empleado de bodega con el id: idEmpleado");
+        lblId.setText("Capacitaciones para el empleado de bodega con el id: idEmpleado");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -104,26 +101,13 @@ public class registroCapacitaciones extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-        agregarCapacitacionEmpleadoBodega();
+        regfun.regCapacitacion(idEmpleadoBodega,txtCapacitacion.getText());
+        txtCapacitacion.setText("");
     }//GEN-LAST:event_btnAgregarActionPerformed
     
     public void setIdEmpleadoBodega(int idEmpleado){
         idEmpleadoBodega = idEmpleado;
-        lblId.setText("capacitaciones para el empleado d bodega con el id: "+idEmpleado);
-    }
-    
-    public boolean agregarCapacitacionEmpleadoBodega(){
-        try {
-            PreparedStatement ps =cn.prepareStatement("INSERT INTO capacitacion(idEmpleadoBodega,capacitacion) VALUES(?,?)");
-            ps.setInt(1, idEmpleadoBodega);
-            ps.setString(2, txtCapacitacion.getText());
-            ps.executeUpdate();
-            txtCapacitacion.setText("");
-            return true;
-        } catch (SQLException e) {
-            System.out.println("error al agregar la capacitacion "+e);
-            return false;
-        }
+        lblId.setText("Capacitaciones para el empleado d bodega con el id: "+idEmpleado);
     }
     
     
@@ -144,20 +128,21 @@ public class registroCapacitaciones extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(registroCapacitaciones.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RegCapacitaciones.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(registroCapacitaciones.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RegCapacitaciones.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(registroCapacitaciones.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RegCapacitaciones.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(registroCapacitaciones.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RegCapacitaciones.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                registroCapacitaciones dialog = new registroCapacitaciones(new javax.swing.JFrame(), true,0);
+                RegCapacitaciones dialog = new RegCapacitaciones(new javax.swing.JFrame(), true,0);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

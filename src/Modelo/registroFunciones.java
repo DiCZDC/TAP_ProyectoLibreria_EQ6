@@ -56,8 +56,10 @@ public class registroFunciones {
         ArrayList<String> salida = new ArrayList<String>();
         try {
             ResultSet rs = cn.createStatement().executeQuery("SELECT * FROM "+tituloTabla);
-            while (rs.next()) 
+            while (rs.next()) {
                 salida.add(rs.getString(pos));
+                System.out.println(rs.getString(pos));
+            }
             
         } catch (SQLException ex) {
             System.out.println("Error al mostrar los datos de la BD"+ex);
@@ -168,5 +170,21 @@ public class registroFunciones {
             }
         return true;
     }
+    
+    //CAPACITACION EXcLUSIVa
+    
+    public boolean regCapacitacion(int idEmpleadoBodega, String capacitacion){
+        try {
+            PreparedStatement ps =cn.prepareStatement("INSERT INTO capacitacion(idEmpleadoBodega,capacitacion) VALUES(?,?)");
+            ps.setInt(1, idEmpleadoBodega);
+            ps.setString(2, capacitacion);
+            ps.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            System.out.println("error al agregar la capacitacion "+e);
+            return false;
+        }
+    }
+    
     
 }

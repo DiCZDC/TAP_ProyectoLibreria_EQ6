@@ -7,13 +7,16 @@ package Ventanas;
 import java.sql.*;
 import javax.swing.table.DefaultTableModel;
 import Modelo.Conexion;
+import Modelo.registroFunciones;
 import java.awt.Color;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 public class VentanaVentas extends javax.swing.JDialog {
 
     Conexion con = new Conexion();
     Connection cn = con.conectar();
+    registroFunciones regfun = new registroFunciones();
     boolean seleccionado = false;
     
     public VentanaVentas(java.awt.Frame parent, boolean modal) {
@@ -278,66 +281,41 @@ public class VentanaVentas extends javax.swing.JDialog {
         DefaultTableModel modelo = new DefaultTableModel();
         DefaultTableModel modelo2 = new DefaultTableModel();
         
+        String [] cabecera1 = {"IdVenta","Nombre del cliente","Fecha de venta","Correo cliente","Cajero"};
         
-        modelo.addColumn("idVenta");
-        modelo.addColumn("nombre del cliente");
-        modelo.addColumn("fecha de venta");
-        modelo.addColumn("correo cliente");
-        modelo.addColumn("cajero");
+        for (String i : cabecera1)
+            modelo.addColumn(i);
         
-        modelo2.addColumn("codigo de barras");
-        modelo2.addColumn("titulo");
-        modelo2.addColumn("isbn");
-        modelo2.addColumn("precio");
-        modelo2.addColumn("cantidad");
-        modelo2.addColumn("subtotal");
+        String[] cabecera2 = {"Codigo de barras","Titulo","ISBN","Precio","Cantidad","Subtotal"};
+        
+        for (String i : cabecera2)
+            modelo2.addColumn(i);
         
         tablaVentas.setModel(modelo);
         tablaProductos.setModel(modelo2);
-        String consulta = "SELECT * FROM venta";
         
-        String data[] = new String[5];
-        Statement st;
+        ArrayList <String[]> dataTabla = regfun.leerDatos("venta", cabecera1.length);
         
-        try {
-            st = cn.createStatement();
-            ResultSet rs = st.executeQuery(consulta);
-            
-            while(rs.next()){
-                
-                data[0] = rs.getString(1);
-                data[1] = rs.getString(2);
-                data[2] = rs.getString(3);
-                data[3] = rs.getString(5);
-                data[4] = rs.getString(4);
-                modelo.addRow(data);
-                
-            }
-            
-        } catch (SQLException e) {
-            System.out.println("error al conectar la tabla de ventas con la base de datos "+e);
-        }
+        for (String[] i : dataTabla) 
+            modelo.addRow(i);
+        
         
     }
     
     public void mostrarProductos(String idVenta){
-        System.out.println("Ventanas.VentanaVentas.mostrarProductos()");
+        
         DefaultTableModel modelo = new DefaultTableModel();
-        modelo.addColumn("codigo de barras");
-        modelo.addColumn("titulo");
-        modelo.addColumn("isbn");
-        modelo.addColumn("precio");
-        modelo.addColumn("cantidad");
-        modelo.addColumn("subtotal");
+        
+        String[] cabecera = {"Codigo de barras","Titulo","ISBN","Precio","Cantidad","Subtotal"};
+        for (String i : cabecera)
+            modelo.addColumn(i);
         
         
-        String consulta = "SELECT * FROM libro JOIN incluir ON libro.codigoBarras = incluir.codigoBarras WHERE incluir.idVenta = ?";
-        System.out.println(idVenta);
         tablaProductos.setModel(modelo);
         String data[] = new String[6];
         
         try {
-            PreparedStatement ps = cn.prepareStatement(consulta);
+            PreparedStatement ps = cn.prepareStatement("SELECT * FROM libro JOIN incluir ON libro.codigoBarras = incluir.codigoBarras WHERE incluir.idVenta = ?");
             ps.setString(1, idVenta);
             ResultSet rs = ps.executeQuery();
             ResultSet rs2;
@@ -348,12 +326,11 @@ public class VentanaVentas extends javax.swing.JDialog {
                 data[1] = rs.getString(4);
                 data[2] = rs.getString(3);
                 data[3] = rs.getString(5);
-                
-                consulta = "SELECT * FROM incluir WHERE codigoBarras=? && idVenta =?";                
-                ps = cn.prepareStatement(consulta);
+                        
+                ps = cn.prepareStatement("SELECT * FROM incluir WHERE codigoBarras=? && idVenta =?");
                 ps.setString(1, data[0]);
                 ps.setString(2, idVenta);
-                System.out.println(data[0]+" "+idVenta);
+                //System.out.println(data[0]+" "+idVenta);
                 rs2 = ps.executeQuery();
                 rs2.next();
                 
