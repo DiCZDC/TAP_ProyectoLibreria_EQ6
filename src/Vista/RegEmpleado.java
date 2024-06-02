@@ -415,8 +415,8 @@ public class RegEmpleado extends javax.swing.JDialog {
                 ps.setString(9, null);
                 ps.setString(10, null);
             }else{
-                ps.setString(9, txtContrasenia.getText());
-                ps.setString(10, txtUsuario.getText());
+                ps.setString(9, txtUsuario.getText());
+                ps.setString(10, txtContrasenia.getText());
             }
             String tipoUsuario = cboTipoUsuario.getSelectedItem().toString();
             switch (tipoUsuario) {
