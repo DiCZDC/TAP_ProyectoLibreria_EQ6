@@ -29,7 +29,7 @@ CREATE TABLE `autor` (
   `idiomaOrigen` varchar(20) NOT NULL,
   `url` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`idAutor`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -38,7 +38,7 @@ CREATE TABLE `autor` (
 
 LOCK TABLES `autor` WRITE;
 /*!40000 ALTER TABLE `autor` DISABLE KEYS */;
-INSERT INTO `autor` VALUES (0000001,'Brandon sanderson','estados unidos','ingles','brandonsanderson.com'),(0000002,'eric arthur blair','reino unido','ingles','');
+INSERT INTO `autor` VALUES (0000001,'Brandon sanderson','estados unidos','ingles','brandonsanderson.com'),(0000002,'eric arthur blair','reino unido','ingles',''),(0000004,'Edgar alan poe','estados unidos','ingles',''),(0000005,'Gabriel García Márquez','Colombia','Español','www.garciamarquez.com'),(0000006,'Jane Austen','Reino Unido','Inglés','www.janeausten.org'),(0000007,'Haruki Murakami','Japón','Japonés','www.harukimurakami.com'),(0000008,'J.K. Rowling','Reino Unido','Inglés','www.jkrowling.com'),(0000009,'Isabel Allende','Chile','Español','www.isabelallende.com'),(0000010,'Leo Tolstoy','Rusia','Ruso','www.leotolstoy.com'),(0000011,'Franz Kafka','Austria-Alemania','Alemán','www.franzkafka.com'),(0000012,'Pablo Neruda','Chile','Español','www.pabloneruda.com'),(0000013,'Margaret Atwood','Canadá','Inglés','www.margaretatwood.ca'),(0000014,'Hermann Hesse','Alemania','Alemán','www.hermannhesse.de'),(0000015,'Homer','Grecia','Griego','www.homerclassics.com'),(0000016,'F. Scott Fitzgerald','Estados Unidos','Inglés','www.fscottfitzgerald.com'),(0000017,'Chinua Achebe','Nigeria','Inglés','www.chinuaachebe.com'),(0000018,'Jorge Luis Borges','Argentina','Español','www.jorgeluisborges.com'),(0000019,'Fyodor Dostoevsky','Rusia','Ruso','www.fyodordostoevsky.com'),(0000020,'Toni Morrison','Estados Unidos','Inglés','www.tonimorrison.com'),(0000021,'Virginia Woolf','Reino Unido','Inglés','www.virginiawoolf.com'),(0000022,'J.R.R. Tolkien','Reino Unido','Inglés','www.jrrtolkien.com'),(0000023,'Octavio Paz','México','Español','www.octaviopaz.com'),(0000024,'Khaled Hosseini','Afganistán','Inglés','www.khaledhosseini.com'),(0000025,'Mark Twain','Estados Unidos','Inglés','www.marktwain.com'),(0000026,'Mario Vargas Llosa','Perú','Español','www.mariovargasllosa.com'),(0000027,'Emile Zola','Francia','Francés','www.emilezola.com'),(0000028,'Umberto Eco','Italia','Italiano','www.umbertoeco.com'),(0000029,'James Joyce','Irlanda','Inglés','www.jamesjoyce.com');
 /*!40000 ALTER TABLE `autor` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -51,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-05-19 13:26:05
+-- Dump completed on 2024-06-01 18:22:41

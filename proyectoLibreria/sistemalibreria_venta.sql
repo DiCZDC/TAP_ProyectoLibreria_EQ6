@@ -31,7 +31,7 @@ CREATE TABLE `venta` (
   PRIMARY KEY (`idVenta`),
   KEY `fk_venta_cajero_idx` (`idCajero`),
   CONSTRAINT `fk_venta_cajero` FOREIGN KEY (`idCajero`) REFERENCES `cajero` (`idCajero`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -40,7 +40,7 @@ CREATE TABLE `venta` (
 
 LOCK TABLES `venta` WRITE;
 /*!40000 ALTER TABLE `venta` DISABLE KEYS */;
-INSERT INTO `venta` VALUES (1,'pedro almaraz almaraz','2024-05-15',1,'pedroalmaraz@gmail.com');
+INSERT INTO `venta` VALUES (3,'pedro almaraz almaraz','2024-05-23',2,'pedro@gmail.com'),(4,'vicky melchor','2024-05-22',7,'vicky@gmail.com'),(5,'lucia garcia','2024-05-24',2,'lucia@gmail.com'),(6,'marco antonio','2024-05-24',7,'marco@gmail.com'),(7,'sofia ramirez','2024-05-25',2,'sofia@gmail.com'),(8,'alejandro perez','2024-05-25',7,'alejandro@gmail.com'),(9,'juan carlos','2024-05-26',2,'juan@gmail.com'),(10,'maria lopez','2024-05-26',7,'maria@gmail.com'),(11,'roberto diaz','2024-05-27',2,'roberto@gmail.com'),(12,'laura martinez','2024-05-27',7,'laura@gmail.com'),(13,'antonio morales','2024-05-28',2,'antonio@gmail.com'),(14,'carla fernandez','2024-05-28',7,'carla@gmail.com'),(15,'luis hernandez','2024-05-29',2,'luis@gmail.com'),(16,'ana sanchez','2024-05-29',7,'ana@gmail.com'),(17,'fernando gomez','2024-05-30',2,'fernando@gmail.com'),(18,'patricia ortiz','2024-05-30',7,'patricia@gmail.com'),(19,'javier ruiz','2024-05-31',2,'javier@gmail.com'),(20,'carmen mendoza','2024-05-31',7,'carmen@gmail.com'),(21,'rafael reyes','2024-06-01',2,'rafael@gmail.com'),(22,'laura serrano','2024-06-01',7,'laura@gmail.com'),(23,'diego vasquez','2024-06-02',2,'diego@gmail.com'),(24,'beatriz castro','2024-06-02',7,'beatriz@gmail.com'),(25,'daniel ortega','2024-06-03',2,'daniel@gmail.com'),(26,'monica rios','2024-06-03',7,'monica@gmail.com'),(27,'hector flores','2024-06-04',2,'hector@gmail.com'),(28,'silvia nuñez','2024-06-04',7,'silvia@gmail.com'),(29,'jose martinez','2024-06-05',2,'jose@gmail.com'),(30,'clara estrada','2024-06-05',7,'clara@gmail.com'),(31,'ricardo navarro','2024-06-06',2,'ricardo@gmail.com'),(32,'veronica vazquez','2024-06-06',7,'veronica@gmail.com');
 /*!40000 ALTER TABLE `venta` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -53,4 +53,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-05-19 13:26:05
+-- Dump completed on 2024-06-01 18:22:41

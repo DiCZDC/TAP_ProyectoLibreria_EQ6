@@ -36,6 +36,7 @@ CREATE TABLE `capacitacion` (
 
 LOCK TABLES `capacitacion` WRITE;
 /*!40000 ALTER TABLE `capacitacion` DISABLE KEYS */;
+INSERT INTO `capacitacion` VALUES (6,'capacitacion para manejar montacargas');
 /*!40000 ALTER TABLE `capacitacion` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -48,4 +49,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-05-19 13:26:04
+-- Dump completed on 2024-06-01 18:22:41
