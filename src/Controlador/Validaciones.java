@@ -3,17 +3,33 @@ import Excepciones.*;
 
 public class Validaciones {
     
+    
     public static String comprobarSoloLetras(String s) throws ExcepcionSoloLetras{
         if(s == null || s.isEmpty()){
             throw new ExcepcionSoloLetras("el campo no debe estar vacio");
         }
         
         for (int i = 0; i < s.length(); i++) {
-            if(!Character.isAlphabetic(s.charAt(i)))
+            if( !(s.charAt(i) == ' ' || Character.isLetter(s.charAt(i)) )    )
                     throw new ExcepcionSoloLetras("el campo debe tener solo letras");
         }
         return s;
     }
+    
+    public static String comprobarLongitudMax(String s, int max) throws ExcepcionLongitudCampo{
+        if(s.length()>max){
+            throw new ExcepcionLongitudCampo("sobrepaso la cantidad maxima de caracteres que es: "+max);
+        }
+        return s;
+    }
+    
+    public static String comprobarLongitudMin(String s, int min) throws ExcepcionLongitudCampo{
+        if(s.length()<min){
+            throw new ExcepcionLongitudCampo("el campo debe tener un minimo de "+min+" letras");
+        }
+        return s;
+    }
+    
     
     public static int comprobarCamposNumericos(String s) throws ExcepcionEnteros{
         try {
