@@ -104,11 +104,11 @@ public class registroFunciones {
     
     //EDITORIAL EXCLUSIVAS
     
-    public boolean regEditorial(String nombre,int telefono, String pagWeb,String email,String direccion){
+    public boolean regEditorial(String nombre,Long telefono, String pagWeb,String email,String direccion){
         try {
             PreparedStatement ps = cn.prepareStatement("INSERT INTO editorial (nombre,telefono,url,email,direccion) VALUES (?,?,?,?,?)");
                 ps.setString(1, nombre);
-                ps.setInt(2, telefono);
+                ps.setLong(2, telefono);
                 ps.setString(3, pagWeb);
                 ps.setString(4, email);
                 ps.setString(5, direccion);
@@ -121,11 +121,11 @@ public class registroFunciones {
         }
         return true;
     }
-    public boolean editarEditorial(String nombre,int telefono, String pagWeb,String email,String direccion,int id){
+    public boolean editarEditorial(String nombre,Long telefono, String pagWeb,String email,String direccion,int id){
             try {
                 PreparedStatement ps = cn.prepareStatement("UPDATE editorial SET nombre=?,telefono=?,url=?,email=?,direccion=? WHERE idEditorial=?");
                 ps.setString(1, nombre);
-                ps.setInt(2, telefono);
+                ps.setLong(2, telefono);
                 ps.setString(3, pagWeb);
                 ps.setString(4, email);
                 ps.setString(5, direccion);

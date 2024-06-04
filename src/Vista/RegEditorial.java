@@ -4,8 +4,13 @@
  */
 package Vista;
 
-import Modelo.*;
+import Modelo.Conexion;
+import Excepciones.*;
+import Controlador.*;
+import Modelo.registroFunciones;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -18,6 +23,7 @@ public class RegEditorial extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         mostrarDatos();
+        setLocationRelativeTo(null);
     }
     private void actualizar(){
         mostrarDatos();
@@ -336,16 +342,49 @@ public class RegEditorial extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    
+    private void edicionTabla(Boolean agregar) throws ExcepcionEnteros, ExcepcionSoloLetras{
+        String nombre = Validaciones.comprobarSoloLetras(txtNombre.getText());
+        long telefono = Validaciones.comprobarCamposLong(txtTelefono.getText());
+        if(agregar)
+               regfun.regEditorial(nombre, telefono, txtPagWeb.getText(), txtEmail.getText(), txtDireccion.getText());
+        else
+            regfun.editarEditorial(nombre, telefono, txtPagWeb.getText(), txtEmail.getText(), txtDireccion.getText(),Integer.parseInt(JTEditorial.getValueAt(fila, 0).toString()));
+        actualizar();
+    }
+    private void CamposVacios()throws ExcepcionCampoVacio{
+        Validaciones.comprobarCampoVacio(txtDireccion.getText());
+        Validaciones.comprobarCampoVacio(txtEmail.getText());
+        Validaciones.comprobarCampoVacio(txtNombre.getText());
+        Validaciones.comprobarCampoVacio(txtPagWeb.getText());
+        Validaciones.comprobarCampoVacio(txtTelefono.getText());
+        
+        
+    }
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        if(regfun.regEditorial(txtNombre.getText(), Integer.parseInt(txtTelefono.getText()), txtPagWeb.getText(), txtEmail.getText(), txtDireccion.getText()))
-            actualizar();
+        try {
+                CamposVacios();
+                edicionTabla(true);
+            } catch (ExcepcionEnteros ex) {
+                JOptionPane.showMessageDialog(null, "Ingrese un numero de telefono valido");
+            } catch (ExcepcionSoloLetras ex) {
+                JOptionPane.showMessageDialog(null, "Ingrese un  nombre solo compuesto de letras");
+            }catch (ExcepcionCampoVacio ex) {
+                JOptionPane.showMessageDialog(null, "Rellene todos los campos solicitados");
+            }
     }//GEN-LAST:event_btnAceptarActionPerformed
     
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         if(fila > 0)
-            if(regfun.editarEditorial(txtNombre.getText(), Integer.parseInt(txtTelefono.getText()), txtPagWeb.getText(), txtEmail.getText(), txtDireccion.getText(),Integer.parseInt(JTEditorial.getValueAt(fila, 0).toString())))
-                actualizar();
+            try {
+                CamposVacios();
+                edicionTabla(false);
+            } catch (ExcepcionEnteros ex) {
+                JOptionPane.showMessageDialog(null, "Ingrese un numero de telefono valido");
+            } catch (ExcepcionSoloLetras ex) {
+                JOptionPane.showMessageDialog(null, "Ingrese un  nombre solo compuesto de letras");
+            }catch (ExcepcionCampoVacio ex) {
+                JOptionPane.showMessageDialog(null, "Rellene todos los campos solicitados");
+            }
         else
             JOptionPane.showMessageDialog(null, "Seleccione un registro.");
         

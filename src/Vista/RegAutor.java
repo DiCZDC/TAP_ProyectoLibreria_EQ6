@@ -22,6 +22,7 @@ public class RegAutor extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         mostrarDatos();
+        setLocationRelativeTo(null);
     }
     private void actualizar(){
         mostrarDatos();

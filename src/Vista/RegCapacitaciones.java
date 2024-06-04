@@ -19,6 +19,7 @@ public class RegCapacitaciones extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         setIdEmpleadoBodega(id);
+        setLocationRelativeTo(null);
     }
 
     /**

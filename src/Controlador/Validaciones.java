@@ -7,9 +7,10 @@ public class Validaciones {
         if(s == null || s.isEmpty()){
             throw new ExcepcionSoloLetras("el campo no debe estar vacio");
         }
+        
         for (int i = 0; i < s.length(); i++) {
-            if(Character.isLetter(s.charAt(i)))
-                throw new ExcepcionSoloLetras("el campo debe tener solo letras");
+            if(!Character.isAlphabetic(s.charAt(i)))
+                    throw new ExcepcionSoloLetras("el campo debe tener solo letras");
         }
         return s;
     }

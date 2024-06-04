@@ -5,6 +5,8 @@
 package Vista;
 
 import Modelo.*;
+import Excepciones.*;
+import Controlador.Validaciones;
 import com.itextpdf.barcodes.BarcodeEAN;
 import com.itextpdf.barcodes.BarcodePDF417;
 import java.awt.*;
@@ -24,6 +26,7 @@ public class RegLibro extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         inicbos();
+        setLocationRelativeTo(null);
     }
     
     public void inicbos(){
@@ -344,8 +347,7 @@ public class RegLibro extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
     
-    
-    private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
+    private void registroLibro() throws ExcepcionEnteros{
         int idAu,idEd;
         idAu = 0;
         idEd=0;
@@ -362,8 +364,15 @@ public class RegLibro extends javax.swing.JDialog {
         }else
             JOptionPane.showMessageDialog(null, "Por favor seleccione casillas validas");
         
-        if(regfun.regLibro(idAu,idEd,Long.parseLong(txtBarcode.getText()),txtISBN.getText(),txtTitulo.getText(),Double.parseDouble(txtPrecio.getText())))
+        if(regfun.regLibro(idAu,idEd,Validaciones.comprobarCamposLong(txtBarcode.getText()),txtISBN.getText(),txtTitulo.getText(),Validaciones.comprobarCamposDouble(txtPrecio.getText())))
                 limpiarCampos();
+    }
+    private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
+        try {
+            registroLibro();
+        } catch (ExcepcionEnteros ex) {
+            JOptionPane.showMessageDialog(null, "Algunos de los datos ingresados se encuentran mal");
+        }
         
     }//GEN-LAST:event_btnAceptarActionPerformed
 

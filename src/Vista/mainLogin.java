@@ -15,7 +15,7 @@ public class mainLogin extends javax.swing.JFrame {
 
     int xMouse,yMouse;
     public mainLogin() {
-        this.setLocation(200, 200);
+        setLocationRelativeTo(null);
         initComponents();
     }
 
