@@ -4,8 +4,10 @@
  */
 package Ventanas;
 
+import Controlador.Validaciones;
 import Modelo.*;
 import Controlador.pdfGenerator;
+import Excepciones.*;
 import java.awt.Desktop;
 import java.io.*;
 import java.sql.*;
@@ -229,17 +231,6 @@ public class VentanaCajero extends javax.swing.JDialog {
             }
         });
 
-        txtBarcode.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtBarcodeActionPerformed(evt);
-            }
-        });
-        txtBarcode.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtBarcodeKeyTyped(evt);
-            }
-        });
-
         btnAceptar.setText("Ejecutar pago");
         btnAceptar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -402,11 +393,11 @@ public class VentanaCajero extends javax.swing.JDialog {
         updateLbl();
     }
     
-    private boolean copiasMinimas(){
+    private boolean copiasMinimas() throws ExcepcionEnteros{
         int cantMax = 0;
         try {
             PreparedStatement ps = cn.prepareStatement("SELECT * FROM libro WHERE codigoBarras=?");
-            ps.setLong(1, Long.parseLong(txtBarcode.getText()));
+            ps.setLong(1, Validaciones.comprobarCamposLong(txtBarcode.getText()));
             ResultSet rs = ps.executeQuery();
             if(rs.next())
                 cantMax = rs.getInt(2);
@@ -433,31 +424,32 @@ public class VentanaCajero extends javax.swing.JDialog {
         lblTotal.setText(total+"");
         
     }
+    private boolean validAgregar() throws ExcepcionCampoVacio, ExcepcionEnteros{
+        Validaciones.comprobarCampoVacio(txtBarcode.getText());
+        Validaciones.comprobarCamposLong(txtBarcode.getText());
+        Validaciones.comprobarCamposNumericos(JsCantidad.getValue().toString());
+        
+        return true;
+    }
     
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-        if(Integer.parseInt(JsCantidad.getValue().toString()) <= 0){
-            JOptionPane.showMessageDialog(null, "Ingrese una cantidad valida");
-            return;
-        }
-        if(!copiasMinimas()){
-            JOptionPane.showMessageDialog(null, "No hay suficientes copias disponibles en tienda");
-        return;
-        }
-            copiasMinimas();
-            updateTabla();
+        try {
+            if(!validAgregar())
+                return;
         
+            if(!copiasMinimas()){
+                JOptionPane.showMessageDialog(null, "No hay suficientes copias disponibles en tienda");
+                return;
+            }
+            updateTabla();
+        } catch (ExcepcionCampoVacio ex) {
+            JOptionPane.showMessageDialog(null, "Ingrese datos en la casilla correspondiente");
+        } catch (ExcepcionEnteros ex) {
+            JOptionPane.showMessageDialog(null, "Ingrese una cantidad valida");
+        }
         txtBarcode.setText("");
         JsCantidad.setValue(0);   
     }//GEN-LAST:event_btnAgregarActionPerformed
-
-    private void txtBarcodeKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBarcodeKeyTyped
-        
-    }//GEN-LAST:event_txtBarcodeKeyTyped
-
-    private void txtBarcodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBarcodeActionPerformed
-        panelInfo.setCodigoBarras(txtBarcode.getText());
-        panelInfo.actualizaDatos();
-    }//GEN-LAST:event_txtBarcodeActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         if (jTicket.getSelectedRow() >= 0) {
@@ -566,19 +558,28 @@ public class VentanaCajero extends javax.swing.JDialog {
     
     
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        envioCorreo();
-        updateDatabase();
+        try {
+            Validaciones.comprobarSoloLetras(txtNombreCli.getText());
+            envioCorreo();
+            updateDatabase();
+        } catch (ExcepcionSoloLetras ex) {
+            JOptionPane.showMessageDialog(null, "Ingrese un nombre valido");
+        }
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     private void txtPagoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPagoActionPerformed
-        double precio = Double.parseDouble(lblTotal.getText());
-        double pago = Double.parseDouble(txtPago.getText());
-        if(precio > pago){
-            JOptionPane.showMessageDialog(null, "El monto ingresado es insuficiente para ejecutar el pago");
-            return;
+        try {
+            double precio = Double.parseDouble(lblTotal.getText());
+            double pago = Validaciones.comprobarCamposDouble(txtPago.getText());
+            if(precio > pago){
+                JOptionPane.showMessageDialog(null, "El monto ingresado es insuficiente para ejecutar el pago");
+                return;
+            }
+            double cambio = pago - precio;
+            lblCambio.setText(cambio+"");
+        } catch (ExcepcionEnteros ex) {
+            JOptionPane.showMessageDialog(null, "Ingrese un valor valido");
         }
-        double cambio = pago - precio;
-        lblCambio.setText(cambio+"");
     }//GEN-LAST:event_txtPagoActionPerformed
 
     /**

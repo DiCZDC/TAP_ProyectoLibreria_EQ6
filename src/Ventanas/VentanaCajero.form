@@ -404,10 +404,6 @@
               </Events>
             </Component>
             <Component class="javax.swing.JTextField" name="txtBarcode">
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtBarcodeActionPerformed"/>
-                <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtBarcodeKeyTyped"/>
-              </Events>
             </Component>
             <Component class="Controlador.EmailButton" name="btnAceptar">
               <Properties>

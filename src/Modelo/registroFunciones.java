@@ -56,10 +56,9 @@ public class registroFunciones {
         ArrayList<String> salida = new ArrayList<String>();
         try {
             ResultSet rs = cn.createStatement().executeQuery("SELECT * FROM "+tituloTabla);
-            while (rs.next()) {
+            while (rs.next()) 
                 salida.add(rs.getString(pos));
-                System.out.println(rs.getString(pos));
-            }
+            
             
         } catch (SQLException ex) {
             System.out.println("Error al mostrar los datos de la BD"+ex);

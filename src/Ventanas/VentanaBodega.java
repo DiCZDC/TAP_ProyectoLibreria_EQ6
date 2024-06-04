@@ -4,12 +4,12 @@
  */
 package Ventanas;
 
+import Controlador.*;
+import Excepciones.*;
 import Modelo.Conexion;
-import Modelo.*;
+import Modelo.registroFunciones;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Locale;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -31,6 +31,7 @@ public class VentanaBodega extends javax.swing.JDialog {
     public VentanaBodega(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        setLocationRelativeTo(null);
         inicbo();
     }
     public void inicbo(){
@@ -166,6 +167,7 @@ public class VentanaBodega extends javax.swing.JDialog {
         panelInfo.setCodigoBarras(cboBarcode.getSelectedItem().toString());
         panelInfo.actualizaDatos();
     }//GEN-LAST:event_cboBarcodeActionPerformed
+    
     private boolean salidaValida(int sal){
         int lim = 0;
         
@@ -189,8 +191,8 @@ public class VentanaBodega extends javax.swing.JDialog {
         return lim>=sal && sal >0;
     }
     
-    private void salidaBodega(){
-        int salen = Integer.parseInt(jsCantidad.getValue().toString());
+    private void salidaBodega() throws ExcepcionEnteros{
+        int salen = Validaciones.comprobarCamposNumericos(jsCantidad.getValue().toString());
         
         if(!salidaValida(salen)){
             JOptionPane.showMessageDialog(null, "INGRESE DATOS VALIDOS");
@@ -216,9 +218,9 @@ public class VentanaBodega extends javax.swing.JDialog {
         }
     }
     
-    private void entradaBodega(){
+    private void entradaBodega() throws ExcepcionEnteros, SQLException{
         
-        try {
+       
             PreparedStatement ps = cn.prepareStatement("SELECT * FROM almacen WHERE direccion=?");
             ps.setString(1, cboAlmacen.getSelectedItem().toString());
             ResultSet rs = ps.executeQuery();
@@ -228,13 +230,10 @@ public class VentanaBodega extends javax.swing.JDialog {
             ps = cn.prepareStatement("INSERT INTO almacenar (codigoBarras, idalmacen, existencia) VALUES(?,?,?) ON DUPLICATE KEY UPDATE existencia = existencia+?");
             ps.setLong(1, Long.parseLong(cboBarcode.getSelectedItem().toString()));
             ps.setInt(2, idActAlm);
-            ps.setInt(3, Integer.parseInt(jsCantidad.getValue().toString()));
-            ps.setInt(4, Integer.parseInt(jsCantidad.getValue().toString()));
+            ps.setInt(3, Validaciones.comprobarCamposNumericos(jsCantidad.getValue().toString()));
+            ps.setInt(4, Validaciones.comprobarCamposNumericos(jsCantidad.getValue().toString()));
             ps.executeUpdate();
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(VentanaBodega.class.getName()).log(Level.SEVERE, null, ex);
-        }
+         
     }
     
     private void limpiarCampos(){
@@ -243,13 +242,24 @@ public class VentanaBodega extends javax.swing.JDialog {
         jsCantidad.setValue(0);
     }
     private void btnEntradaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntradaActionPerformed
-        entradaBodega();
-        limpiarCampos();
+        try {
+            entradaBodega();
+            limpiarCampos();
+        } catch (ExcepcionEnteros ex) {
+            JOptionPane.showMessageDialog(null, "Ingrese una cantidad valida");
+        } catch (SQLException ex) {
+            Logger.getLogger(VentanaBodega.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnEntradaActionPerformed
 
     private void btnSalidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalidaActionPerformed
-        salidaBodega();
-        limpiarCampos();
+        
+        try {
+            salidaBodega();
+            limpiarCampos();
+        } catch (ExcepcionEnteros ex) {
+            JOptionPane.showMessageDialog(null, "Ingrese una cantidad valida");
+        }
     }//GEN-LAST:event_btnSalidaActionPerformed
 
     /**
