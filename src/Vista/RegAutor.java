@@ -6,7 +6,10 @@ package Vista;
 
 import Modelo.registroFunciones;
 import Controlador.*;
+import Excepciones.*;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -305,10 +308,34 @@ public class RegAutor extends javax.swing.JDialog {
         txtPagWeb.setText("");
         txtPais.setText("");
     }
-    
+    public void edicionTabla(boolean registro) throws ExcepcionSoloLetras{
+        String nombre = Validaciones.comprobarSoloLetras(txtNombre.getText());
+        String pais = Validaciones.comprobarSoloLetras(txtPais.getText());
+        String idioma = Validaciones.comprobarSoloLetras(txtIdioma.getText());
+        if(registro)
+            regfun.regAutor(nombre, pais,idioma , txtPagWeb.getText());
+        else
+            regfun.editarAutor(nombre,pais,idioma,txtPagWeb.getText(),Integer.parseInt(JTAutores.getValueAt(fila, 0).toString()));
+        actualizar();
+    }
+    private void CamposVacios()throws ExcepcionCampoVacio{
+        Validaciones.comprobarCampoVacio(txtIdioma.getText());
+        Validaciones.comprobarCampoVacio(txtNombre.getText());
+        Validaciones.comprobarCampoVacio(txtPais.getText());
+        Validaciones.comprobarCampoVacio(txtPagWeb.getText());
+        
+        
+    }
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        if(regfun.regAutor(txtNombre.getText(), txtPais.getText(), txtIdioma.getText(), txtPagWeb.getText()))
-            actualizar();
+        try {
+            CamposVacios();
+            edicionTabla(true);
+        } catch (ExcepcionSoloLetras ex) {
+            JOptionPane.showMessageDialog(null, "Ingrese datos validos");
+        } catch (ExcepcionCampoVacio ex) {
+            JOptionPane.showMessageDialog(null, "Rellene todos los campos solicitados");
+
+        }
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
@@ -325,8 +352,14 @@ public class RegAutor extends javax.swing.JDialog {
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         if(fila > 0)
-            if(regfun.editarAutor(txtNombre.getText(),txtPais.getText(),txtIdioma.getText(),txtPagWeb.getText(),Integer.parseInt(JTAutores.getValueAt(fila, 0).toString())))
-                actualizar();
+            try {
+                CamposVacios();
+                edicionTabla(false);
+        } catch (ExcepcionSoloLetras ex) {
+            JOptionPane.showMessageDialog(null, "Ingrese datos validos");
+        } catch (ExcepcionCampoVacio ex) {
+                JOptionPane.showMessageDialog(null, "Rellene todos los campos solicitados");
+        }
         else
             JOptionPane.showMessageDialog(null, "Seleccione un registro.");
     }//GEN-LAST:event_btnEditarActionPerformed
